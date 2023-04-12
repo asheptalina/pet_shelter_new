@@ -7,17 +7,12 @@ part 'sing_in_state.g.dart';
 class SignInState = SignInStateBase with _$SignInState;
 
 abstract class SignInStateBase with Store {
-  @observable
-  String? email;
-  @observable
-  String? password;
+  @observable String? email;
+  @observable String? password;
 
-  @observable
-  String? emailError;
-  @observable
-  String? passwordError;
-  @observable
-  String? signInError;
+  @observable String? emailError;
+  @observable String? passwordError;
+  @observable String? signInError;
 
   @action
   void onEmailChanged(String emailValue) {

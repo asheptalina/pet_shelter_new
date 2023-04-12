@@ -6,8 +6,8 @@ import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/ui_consts/auth_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/auth/sign_in/sing_in_container_widget.dart';
+import 'package:pet_shelter_new/views/auth/sign_up/sing_up_container_widget.dart';
 import 'package:pet_shelter_new/views/components/secondary_button.dart';
-import 'package:provider/provider.dart';
 
 class AuthWidget extends StatefulWidget {
   const AuthWidget({Key? key}) : super(key: key);
@@ -111,7 +111,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
 
   Widget _buildSignUpView() {
     return const SingleChildScrollView(
-        child: SignInContainerWidget()
+        child: SignUpContainerWidget()
     );
   }
 
@@ -124,7 +124,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
     );
   }
 
-  Widget _buildForgotPasswordButton() {
-    return SecondaryButton(label: AppStrings.forgotPassword, onPressed: () {});
-  }
+  // Widget _buildForgotPasswordButton() {
+  //   return SecondaryButton(label: AppStrings.forgotPassword, onPressed: () {});
+  // }
 }
