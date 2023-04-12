@@ -8,9 +8,6 @@ class SignUpContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<SignUpState>(
-        create: (_) => SignUpState(),
-        child: SignUpWidget(state: SignUpState())
-    );
+    return SignUpWidget(state: Provider.of<SignUpState>(context));
   }
 }

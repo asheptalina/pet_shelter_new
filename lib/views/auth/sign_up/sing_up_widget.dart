@@ -15,12 +15,12 @@ class SignUpWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Observer(builder: (_) => Column(
       children: [
-        Observer(builder: (_) => _buildErrorMessage()),
+        _buildErrorMessage(),
         _buildForm(context),
       ],
-    );
+    ));
   }
 
   Widget _buildForm(BuildContext context) {

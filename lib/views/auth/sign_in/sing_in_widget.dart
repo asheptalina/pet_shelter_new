@@ -15,12 +15,12 @@ class SignInWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Observer(builder: (_) => Column(
       children: [
-        Observer(builder: (_) => _buildErrorMessage()),
+        _buildErrorMessage(),
         _buildForm(context),
       ],
-    );
+    ));
   }
 
   Widget _buildForm(BuildContext context) {
@@ -52,22 +52,22 @@ class SignInWidget extends StatelessWidget {
   }
 
   Widget _buildEmailField() {
-    return Observer(builder: (_) =>CustomFormField(
+    return CustomFormField(
       value: state.email,
       labelText: AppStrings.emailFormFieldHint,
       onChanged: (value) => state.onEmailChanged(value),
       errorText: state.emailError,
       inputType: TextInputType.emailAddress,
-    ));
+    );
   }
 
   Widget _buildPasswordField() {
-    return Observer(builder: (_) => CustomFormField(
+    return CustomFormField(
       value: state.password,
       labelText: AppStrings.passwordFormFieldHint,
       onChanged: (value) => state.onPasswordChanged(value),
       obscureText: true,
       errorText: state.passwordError,
-    ));
+    );
   }
 }
