@@ -38,15 +38,15 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
       body: Container(
         margin: EdgeInsets.symmetric(
           vertical: screenWidth * AuthUIConstants.verticalPaddingCof,
-          horizontal: screenWidth * AuthUIConstants.horizontalPaddingCof
+          horizontal: screenWidth * MainUIConstants.horizontalPaddingCof
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildLogoView(screenWidth * AuthUIConstants.logoWithCof),
-            SizedBox(height: screenWidth * AuthUIConstants.logoBottomPaddingCof),
+            SizedBox(height: screenWidth * AuthUIConstants.tabBarTopPaddingCof),
             _buildTabBar(screenWidth),
-            SizedBox(height: screenWidth * AuthUIConstants.formOuterPaddingCof),
+            SizedBox(height: screenWidth * AuthUIConstants.tabBarBottomPaddingCof),
             _buildTabView(screenWidth),
             _buildLoginLaterButton()
           ]
@@ -94,6 +94,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
   Widget _buildTabView(double screenWidth) {
     return Expanded(
         child: TabBarView(
+          clipBehavior: Clip.none,
           controller: _tabController,
           children: [
             _buildSignInView(),

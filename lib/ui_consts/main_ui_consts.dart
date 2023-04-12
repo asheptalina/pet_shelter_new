@@ -3,13 +3,13 @@ import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 
 class MainUIConstants {
-  static const horizontalPaddingCoff = 0.085;
-  static const bottomButtonPaddingCoff = 0.06;
+  static const horizontalPaddingCof = 0.085;
+  static const bottomButtonPaddingCof = 0.06;
 
   static const buttonPaddings = EdgeInsets.symmetric(vertical: 18.5, horizontal: 32);
   static const buttonInnerHorizontalPadding = 11.0;
 
-  static const appBarHeightCoff = 0.133;
+  static const appBarHeightCof = 0.133;
 
   static ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
       backgroundColor: AppColors.primary,
