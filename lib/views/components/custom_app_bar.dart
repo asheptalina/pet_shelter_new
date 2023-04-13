@@ -26,7 +26,10 @@ class CustomAppBar extends StatelessWidget {
               _buildBackButton(),
               Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text(header, style: MainUIConstants.headerTextStyle)
+                  child: Text(
+                      header,
+                      style: MainUIConstants.headerTextStyle.copyWith(color: Colors.white)
+                  )
               )
             ],
           ),

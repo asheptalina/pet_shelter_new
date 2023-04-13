@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
-import 'package:pet_shelter_new/models/geo_coordinate.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
 
 part 'create_ad_state.g.dart';
@@ -18,7 +17,7 @@ abstract class CreateAdStateBase with Store {
   @observable CreateAdScreen selectedScreen = CreateAdScreen.addPhoto;
 
   @observable File? photoFile;
-  @observable GeoCoordinate? geoCoordinate;
+  @observable LatLng? coordinate;
   @observable PetType petType = PetType.cat;
   @observable String? title;
   @observable String? description;
@@ -39,8 +38,8 @@ abstract class CreateAdStateBase with Store {
   }
 
   @action
-  void saveGeoCoordinate(GeoCoordinate coordinate) {
-    geoCoordinate = coordinate;
+  void saveCoordinate(LatLng coordinate) {
+    coordinate = coordinate;
   }
 
   @action

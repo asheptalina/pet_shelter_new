@@ -32,6 +32,8 @@ class CreateAdReviewPhotoWidget extends StatelessWidget {
           const Spacer(),
           PrimaryButton(
               label: AppStrings.specifyAddressButton,
+              icon: AppAssets.arrowForwardIcon,
+              iconLeading: false,
               onPressed: () => state.selectScreen(CreateAdScreen.specifyAddress)
           )
         ],

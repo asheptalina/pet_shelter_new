@@ -41,19 +41,19 @@ mixin _$CreateAdState on CreateAdStateBase, Store {
     });
   }
 
-  late final _$geoCoordinateAtom =
-      Atom(name: 'CreateAdStateBase.geoCoordinate', context: context);
+  late final _$coordinateAtom =
+      Atom(name: 'CreateAdStateBase.coordinate', context: context);
 
   @override
-  GeoCoordinate? get geoCoordinate {
-    _$geoCoordinateAtom.reportRead();
-    return super.geoCoordinate;
+  LatLng? get coordinate {
+    _$coordinateAtom.reportRead();
+    return super.coordinate;
   }
 
   @override
-  set geoCoordinate(GeoCoordinate? value) {
-    _$geoCoordinateAtom.reportWrite(value, super.geoCoordinate, () {
-      super.geoCoordinate = value;
+  set coordinate(LatLng? value) {
+    _$coordinateAtom.reportWrite(value, super.coordinate, () {
+      super.coordinate = value;
     });
   }
 
@@ -171,11 +171,11 @@ mixin _$CreateAdState on CreateAdStateBase, Store {
   }
 
   @override
-  void saveGeoCoordinate(GeoCoordinate coordinate) {
+  void saveCoordinate(LatLng coordinate) {
     final _$actionInfo = _$CreateAdStateBaseActionController.startAction(
-        name: 'CreateAdStateBase.saveGeoCoordinate');
+        name: 'CreateAdStateBase.saveCoordinate');
     try {
-      return super.saveGeoCoordinate(coordinate);
+      return super.saveCoordinate(coordinate);
     } finally {
       _$CreateAdStateBaseActionController.endAction(_$actionInfo);
     }
@@ -219,7 +219,7 @@ mixin _$CreateAdState on CreateAdStateBase, Store {
     return '''
 selectedScreen: ${selectedScreen},
 photoFile: ${photoFile},
-geoCoordinate: ${geoCoordinate},
+coordinate: ${coordinate},
 petType: ${petType},
 title: ${title},
 description: ${description},

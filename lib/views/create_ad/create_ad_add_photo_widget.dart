@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
+import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
 
@@ -21,6 +22,7 @@ class CreateAdAddPhotoWidget extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -29,6 +31,7 @@ class CreateAdAddPhotoWidget extends StatelessWidget {
         PrimaryButton(
             label: AppStrings.uploadPhotoButton,
             icon: AppAssets.galleryIcon,
+            width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
             onPressed: () => _onAddPhoto(context)
         ),
         Padding(
@@ -36,6 +39,7 @@ class CreateAdAddPhotoWidget extends StatelessWidget {
             child: PrimaryButton(
                 label: AppStrings.takePhotoButton,
                 icon: AppAssets.photoIcon,
+                width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
                 onPressed: () => {}
             ),
         ),

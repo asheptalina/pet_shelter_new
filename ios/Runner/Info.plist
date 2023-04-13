@@ -28,6 +28,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Приложению необходим доступ к камере</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Приложению необходим доступ к геопозиции</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Приложению необходим доступ к микрофону</string>
 	<key>NSPhotoLibraryUsageDescription</key>
