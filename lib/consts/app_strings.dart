@@ -55,4 +55,10 @@ class AppStrings {
   static const String dogsTab = "Собаки";
   static const String otherTab = "Другие";
 
+  // Profile screen
+  static const String profileEditing = "Изменение профиля";
+  static const String saveAlert = "Сохранить изменения?";
+  static const String saveButton = "Сохранить";
+  static const String doNotSaveButton = "Не сохранять";
+  static const String logoutButton = "Выйти";
 }

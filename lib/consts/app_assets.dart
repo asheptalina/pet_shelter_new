@@ -4,6 +4,8 @@ class AppAssets {
   // Misc
   static const backIcon = "assets/images/back_icon.svg";
   static const arrowForwardIcon = "assets/images/arrow_forward_icon.svg";
+  static const checkMarkIcon = "assets/images/check_mark_icon.svg";
+  static const editIcon = "assets/images/edit_icon.svg";
 
   // Auth screens
   static const appLogo = "assets/images/app_logo.svg";
@@ -19,7 +21,6 @@ class AppAssets {
   static const profileUnselectedIcon = "assets/images/bottom_bar/profile_unselected_icon.svg";
 
   // Create ad screens
-  static const checkMarkIcon = "assets/images/check_mark_icon.svg";
   static const photoIcon = "assets/images/photo_icon.svg";
   static const galleryIcon = "assets/images/gallery_icon.svg";
 
@@ -31,4 +32,8 @@ class AppAssets {
   static const petTypeCatIcon = "assets/images/pet_type/cat_icon.svg";
   static const petTypeDogIcon = "assets/images/pet_type/dog_icon.svg";
   static const petTypeBunnyIcon = "assets/images/pet_type/bunny_icon.svg";
+
+  // Profile icons
+  static const addPhotoIcon = "assets/images/add_photo_icon.svg";
+  static const logoutIcon = "assets/images/logout_icon.svg";
 }

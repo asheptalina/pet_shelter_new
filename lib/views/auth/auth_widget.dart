@@ -86,7 +86,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
         ),
         labelColor: AppColors.black,
         unselectedLabelColor: AppColors.black,
-        labelStyle: MainUIConstants.primaryButtonsTextStyle,
+        labelStyle: MainUIConstants.bodyBoldTextStyle,
         tabs: const [
           Tab(text: AppStrings.signInTab),
           Tab(text: AppStrings.signUpTab),

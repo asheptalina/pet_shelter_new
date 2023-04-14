@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
-import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
+import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
 
@@ -18,7 +18,7 @@ class CreateAdReviewPhotoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: CreateAdUIConstants.verticalPadding),
+      padding: const EdgeInsets.only(bottom: MainUIConstants.verticalPadding),
       child: Column(
         children: [
           CustomAppBar(

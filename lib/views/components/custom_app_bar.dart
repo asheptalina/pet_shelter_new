@@ -6,10 +6,13 @@ import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 
 class CustomAppBar extends StatelessWidget {
 
-  final String header;
+  final String? header;
   final VoidCallback? onBack;
+  final String? actionIcon;
+  final VoidCallback? action;
 
-  const CustomAppBar({required this.header, this.onBack, Key? key}) : super(key: key);
+  const CustomAppBar({this.header, this.onBack, this.action, this.actionIcon, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +27,12 @@ class CustomAppBar extends StatelessWidget {
           child: Stack(
             children: [
               _buildBackButton(),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                      header,
-                      style: MainUIConstants.headerTextStyle.copyWith(color: Colors.white)
-                  )
-              )
-            ],
-          ),
-        ),
-      ),
+              _buildHeader(),
+              _buildActionButton()
+            ]
+          )
+        )
+      )
     );
   }
 
@@ -43,7 +41,29 @@ class CustomAppBar extends StatelessWidget {
       alignment: Alignment.bottomLeft,
       child: GestureDetector(
         onTap: () => onBack!(),
-        child: SvgPicture.asset(AppAssets.backIcon),
+        child: SvgPicture.asset(AppAssets.backIcon, color: Colors.white)
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return header == null ? const SizedBox.shrink() :  Align(
+        alignment: Alignment.bottomCenter,
+        child: Text(
+            header!,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            style: MainUIConstants.titleTextStyle.copyWith(color: Colors.white)
+        )
+    );
+  }
+
+  Widget _buildActionButton() {
+    return action == null || actionIcon == null ? const SizedBox.shrink() : Align(
+      alignment: Alignment.bottomRight,
+      child: GestureDetector(
+        onTap: () => action!(),
+        child: SvgPicture.asset(actionIcon!, color: Colors.white)
       ),
     );
   }

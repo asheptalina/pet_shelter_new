@@ -44,7 +44,7 @@ class CreateAdDescriptionWidget extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: CreateAdUIConstants.verticalPadding,
+        vertical: MainUIConstants.verticalPadding,
         horizontal: screenSize.width * MainUIConstants.horizontalPaddingCof
       ),
       child: Column(
