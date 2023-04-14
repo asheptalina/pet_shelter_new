@@ -3,6 +3,7 @@ import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 
 class MainUIConstants {
+  static const verticalPadding = 24.0;
   static const horizontalPaddingCof = 0.085;
   static const bottomButtonPaddingCof = 0.06;
 
@@ -16,7 +17,7 @@ class MainUIConstants {
   static ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
       backgroundColor: AppColors.primary,
       padding: buttonPaddings,
-      textStyle: primaryButtonsTextStyle.copyWith(color: Colors.white),
+      textStyle: bodyBoldTextStyle.copyWith(color: Colors.white),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0))
       )
@@ -25,24 +26,31 @@ class MainUIConstants {
   static ButtonStyle secondaryButtonStyle = TextButton.styleFrom(
       foregroundColor: AppColors.black,
       padding: buttonPaddings,
-      textStyle: secondaryButtonsTextStyle
+      textStyle: bodySemiBoldTextStyle
   );
 
-  static TextStyle headerTextStyle = const TextStyle(
+  static TextStyle headlineTextStyle = const TextStyle(
+      fontFamily: AppAssets.mulishFontFamily,
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color: AppColors.black
+  );
+
+  static TextStyle titleTextStyle = const TextStyle(
       fontFamily: AppAssets.mulishFontFamily,
       fontSize: 20,
       fontWeight: FontWeight.bold,
       color: AppColors.black
   );
 
-  static TextStyle primaryButtonsTextStyle = const TextStyle(
+  static TextStyle bodyBoldTextStyle = const TextStyle(
       fontFamily: AppAssets.mulishFontFamily,
       fontSize: 16,
       fontWeight: FontWeight.bold,
       color: AppColors.black
   );
 
-  static TextStyle secondaryButtonsTextStyle = const TextStyle(
+  static TextStyle bodySemiBoldTextStyle = const TextStyle(
       fontFamily: AppAssets.mulishFontFamily,
       fontSize: 16,
       fontWeight: FontWeight.w600,
@@ -56,12 +64,12 @@ class MainUIConstants {
       color: AppColors.black
   );
 
-  static TextStyle validationTextStyle = const TextStyle(
+  static TextStyle labelTextStyle = const TextStyle(
       fontFamily: AppAssets.mulishFontFamily,
       fontSize: 12,
       fontWeight: FontWeight.normal,
       color: AppColors.black
   );
 
-  static TextStyle errorTextStyle = validationTextStyle.copyWith(color: AppColors.error);
+  static TextStyle errorTextStyle = labelTextStyle.copyWith(color: AppColors.error);
 }
