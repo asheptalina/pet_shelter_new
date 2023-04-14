@@ -8,7 +8,4 @@ class AuthUIConstants {
   static const tabBarHeightCof = 0.128;
   static const activeIndicatorHeight = 5.0;
   static const inactiveIndicatorHeight = 1.0;
-
-  static const formFieldVerticalSpacing = 32.0;
-
 }

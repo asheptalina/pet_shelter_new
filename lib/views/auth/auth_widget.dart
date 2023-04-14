@@ -38,6 +38,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         margin: EdgeInsets.symmetric(
           vertical: screenWidth * AuthUIConstants.verticalPaddingCof,

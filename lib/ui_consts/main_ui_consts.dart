@@ -9,6 +9,8 @@ class MainUIConstants {
   static const buttonPaddings = EdgeInsets.symmetric(vertical: 18.5, horizontal: 32);
   static const buttonInnerHorizontalPadding = 11.0;
 
+  static const formFieldVerticalSpacing = 32.0;
+
   static const appBarHeightCof = 0.133;
 
   static ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(

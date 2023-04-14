@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Pet Shelter New</string>
+	<string>Pet Shelter</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,6 +26,14 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Приложению необходим доступ к камере</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Приложению необходим доступ к геопозиции</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Приложению необходим доступ к микрофону</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Приложению необходим доступ к фото</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
