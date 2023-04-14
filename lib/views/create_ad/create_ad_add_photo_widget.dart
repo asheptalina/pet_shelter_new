@@ -1,0 +1,58 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:pet_shelter_new/consts/app_assets.dart';
+import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
+import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
+import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
+import 'package:pet_shelter_new/views/components/primary_button.dart';
+
+class CreateAdAddPhotoWidget extends StatelessWidget {
+  final CreateAdState state;
+
+  const CreateAdAddPhotoWidget({required this.state, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildContent(context);
+  }
+
+  Widget _buildContent(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const CustomAppBar(header: AppStrings.addPhotoHeader),
+        const Spacer(),
+        PrimaryButton(
+            label: AppStrings.uploadPhotoButton,
+            icon: AppAssets.galleryIcon,
+            width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
+            onPressed: () => _onAddPhoto(context)
+        ),
+        Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: PrimaryButton(
+                label: AppStrings.takePhotoButton,
+                icon: AppAssets.photoIcon,
+                width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
+                onPressed: () => {}
+            ),
+        ),
+        const Spacer(),
+      ],
+    );
+  }
+
+  void _onAddPhoto(BuildContext context) async {
+    XFile? image = await GetIt.instance.get<ImagePicker>().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      state.savePhoto(File(image.path));
+      state.selectScreen(CreateAdScreen.reviewPhoto);
+    }
+  }
+}

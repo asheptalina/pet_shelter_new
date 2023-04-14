@@ -25,6 +25,7 @@ class AppAssets {
 
   static const placeholderImage = "assets/images/placeholder_image.svg";
   static const locationMarker = "assets/images/location_marker.svg";
+  static const currentLocationButton = "assets/images/current_location_button.svg";
 
   // Pet types icons
   static const petTypeCatIcon = "assets/images/pet_type/cat_icon.svg";

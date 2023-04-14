@@ -6,28 +6,39 @@ class PrimaryButton extends StatelessWidget {
   final String label;
   final String? icon;
   final bool iconLeading;
-  final VoidCallback onPressed;
+  final double? width;
+  final VoidCallback? onPressed;
 
   const PrimaryButton({
     required this.label,
     this.icon,
     this.iconLeading = true,
+    this.width,
     required this.onPressed,
     Key? key
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return ElevatedButton(
       onPressed: onPressed,
       style: MainUIConstants.primaryButtonStyle,
-      child: icon == null ? Text(label) : Wrap(
-        spacing: MainUIConstants.buttonInnerHorizontalPadding,
-        children: iconLeading
-            ? [SvgPicture.asset(icon!, color: Colors.white), Text(label)]
-            : [Text(label), SvgPicture.asset(icon!, color: Colors.white)],
-      ),
+      child: width == null
+          ? _buildContent()
+          : SizedBox(
+              width: width! - MainUIConstants.buttonPaddings.horizontal * 2,
+              child: Center(child: _buildContent())
+          )
+    );
+  }
+
+  Widget _buildContent() {
+    return icon == null ? Text(label) : Wrap(
+      spacing: MainUIConstants.buttonInnerHorizontalPadding,
+      crossAxisAlignment: WrapCrossAlignment.end,
+      children: iconLeading
+          ? [SvgPicture.asset(icon!, color: Colors.white), Text(label)]
+          : [Text(label), SvgPicture.asset(icon!, color: Colors.white)],
     );
   }
 }

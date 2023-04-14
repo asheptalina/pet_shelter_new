@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/states/auth/sing_in_state.dart';
-import 'package:pet_shelter_new/ui_consts/auth_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
@@ -28,9 +27,9 @@ class SignInWidget extends StatelessWidget {
     return Column(
         children: [
           _buildEmailField(),
-          const SizedBox(height: AuthUIConstants.formFieldVerticalSpacing),
+          const SizedBox(height: MainUIConstants.formFieldVerticalSpacing),
           _buildPasswordField(),
-          const SizedBox(height: AuthUIConstants.formFieldVerticalSpacing),
+          const SizedBox(height: MainUIConstants.formFieldVerticalSpacing),
           PrimaryButton(
               label: AppStrings.signInButton,
               icon: AppAssets.appMainIcon,
@@ -43,7 +42,7 @@ class SignInWidget extends StatelessWidget {
   }
   Widget _buildErrorMessage() {
     return state.signInError == null ? const SizedBox.shrink() : Padding(
-      padding: const EdgeInsets.only(bottom: AuthUIConstants.formFieldVerticalSpacing),
+      padding: const EdgeInsets.only(bottom: MainUIConstants.formFieldVerticalSpacing),
       child: Text(
         state.signInError!,
         style: MainUIConstants.errorTextStyle,
