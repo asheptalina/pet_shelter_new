@@ -67,6 +67,7 @@ class CreateAdDescriptionWidget extends StatelessWidget {
 
   Widget _buildDescriptionTextField() {
     return CustomFormField(
+      value: state.description,
       labelText: AppStrings.petDescriptionHint,
       onChanged: (value) => state.onDescriptionChanged(value),
       errorText: state.descriptionError,
@@ -89,10 +90,12 @@ class CreateAdDescriptionWidget extends StatelessWidget {
         itemBuilder: (context, index) =>
           GestureDetector(
             onTap: () => state.selectPetType(PetType.values[index]),
-            child: _buildPetTypeItem(
-              PetType.values[index],
-              state.petType == PetType.values[index],
-              screenSize
+            child: Observer(
+              builder: (_) => _buildPetTypeItem(
+                  PetType.values[index],
+                  state.petType == PetType.values[index],
+                  screenSize
+              ),
             ),
           )
     );

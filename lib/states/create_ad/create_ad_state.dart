@@ -44,8 +44,8 @@ abstract class CreateAdStateBase with Store {
 
   @action
   void selectPetType(PetType petType) {
-    if (petType != petType) {
-      petType = petType;
+    if (this.petType != petType) {
+      this.petType = petType;
     }
   }
 
@@ -69,6 +69,8 @@ abstract class CreateAdStateBase with Store {
   }
 
   bool _validateFields() {
+    titleError = null;
+    descriptionError = null;
     if (title == null || title!.isEmpty) {
       titleError = AppStrings.emptyFieldError;
     } else if (title!.length > 46) {

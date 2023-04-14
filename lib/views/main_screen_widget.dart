@@ -20,6 +20,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Provider(
         create: (_) => CreateAdState(),
         child: _buildBody()
