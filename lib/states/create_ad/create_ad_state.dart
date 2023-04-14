@@ -34,12 +34,12 @@ abstract class CreateAdStateBase with Store {
 
   @action
   void savePhoto(File photoFile) {
-    photoFile = photoFile;
+    this.photoFile = photoFile;
   }
 
   @action
   void saveCoordinate(LatLng coordinate) {
-    coordinate = coordinate;
+    this.coordinate = coordinate;
   }
 
   @action

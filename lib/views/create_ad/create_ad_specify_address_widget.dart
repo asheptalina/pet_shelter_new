@@ -5,7 +5,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
-import 'package:pet_shelter_new/models/geo_coordinate.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
 import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
@@ -31,9 +30,12 @@ class _CreateAdSpecifyAddressWidgetState extends State<CreateAdSpecifyAddressWid
   @override
   void initState() {
     super.initState();
+    _markerPosition = widget.state.coordinate;
     _updateCurrentLocation();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_locationData?.latitude != null && _locationData?.longitude != null ) {
+      if (_markerPosition != null) {
+        _mapController.moveAndRotate(_markerPosition!, CreateAdUIConstants.mapDefaultZoom, 0);
+      } else if (_locationData?.latitude != null && _locationData?.longitude != null ) {
         _mapController.moveAndRotate(
             LatLng(_locationData!.latitude!, _locationData!.longitude!),
             CreateAdUIConstants.mapDefaultZoom,
@@ -88,20 +90,18 @@ class _CreateAdSpecifyAddressWidgetState extends State<CreateAdSpecifyAddressWid
       children: [
         _buildMap(),
         Padding(
-          padding: const EdgeInsets.only(
-              left: CreateAdUIConstants.horizontalPadding,
-              top: CreateAdUIConstants.topPadding,
-              right: CreateAdUIConstants.horizontalPadding,
-              bottom: CreateAdUIConstants.bottomPadding
-          ),
+          padding: const EdgeInsets.only(bottom: CreateAdUIConstants.verticalPadding),
           child: Column(
             children: [
-              Align(
-                  alignment: Alignment.topRight,
-                  child: GestureDetector(
-                    onTap: () => _updateCurrentLocation(),
-                    child: SvgPicture.asset(AppAssets.currentLocationButton)
-                  )
+              Padding(
+                padding: CreateAdUIConstants.currentLocationButtonPaddings,
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                        onTap: () => _updateCurrentLocation(),
+                        child: SvgPicture.asset(AppAssets.currentLocationButton)
+                    )
+                ),
               ),
               const Spacer(),
               Align(

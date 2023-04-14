@@ -23,7 +23,12 @@ class PrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: MainUIConstants.primaryButtonStyle,
-      child: width == null ? _buildContent() : SizedBox(width: width, child: Center(child: _buildContent())),
+      child: width == null
+          ? _buildContent()
+          : SizedBox(
+              width: width! - MainUIConstants.buttonPaddings.horizontal * 2,
+              child: Center(child: _buildContent())
+          )
     );
   }
 
