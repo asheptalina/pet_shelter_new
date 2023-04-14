@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/repositories/local_storage/local_storage.dart';
+import 'package:pet_shelter_new/services/network_service.dart';
 import 'package:pet_shelter_new/states/auth/sing_in_state.dart';
 import 'package:pet_shelter_new/states/auth/sing_up_state.dart';
 import 'package:pet_shelter_new/ui_consts/auth_ui_consts.dart';
@@ -11,6 +14,7 @@ import 'package:pet_shelter_new/views/auth/sign_in/sing_in_container_widget.dart
 import 'package:pet_shelter_new/views/auth/sign_up/sing_up_container_widget.dart';
 import 'package:pet_shelter_new/views/components/secondary_button.dart';
 import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 
 class AuthWidget extends StatefulWidget {
   const AuthWidget({Key? key}) : super(key: key);
@@ -96,11 +100,13 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
   }
 
   Widget _buildTabView(double screenWidth) {
+    final networkService = GetIt.instance.get<NetworkService>();
+    final localStorage = GetIt.instance.get<LocalStorage>();
     return Expanded(
         child: MultiProvider(
           providers: [
-            Provider<SignInState>(create: (_) => SignInState()),
-            Provider<SignUpState>(create: (_) => SignUpState()),
+            Provider<SignInState>(create: (_) => SignInState(networkService: networkService, localStorage: localStorage)),
+            Provider<SignUpState>(create: (_) => SignUpState(networkService: networkService, localStorage: localStorage)),
           ],
           child: TabBarView(
             clipBehavior: Clip.none,
@@ -131,7 +137,7 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
         label: AppStrings.logInLaterButton,
         icon: AppAssets.arrowForwardIcon,
         iconLeading: false,
-        onPressed: () {}
+        onPressed: () => Routemaster.of(context).replace('/guest')
     );
   }
 

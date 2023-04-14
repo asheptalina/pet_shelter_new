@@ -153,6 +153,14 @@ mixin _$SignUpState on SignUpStateBase, Store {
     });
   }
 
+  late final _$signUpAsyncAction =
+      AsyncAction('SignUpStateBase.signUp', context: context);
+
+  @override
+  Future<void> signUp(VoidCallback onSuccess) {
+    return _$signUpAsyncAction.run(() => super.signUp(onSuccess));
+  }
+
   late final _$SignUpStateBaseActionController =
       ActionController(name: 'SignUpStateBase', context: context);
 
@@ -195,17 +203,6 @@ mixin _$SignUpState on SignUpStateBase, Store {
         name: 'SignUpStateBase.onConfirmPasswordChanged');
     try {
       return super.onConfirmPasswordChanged(confirmPasswordValue);
-    } finally {
-      _$SignUpStateBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void signUp(VoidCallback onSuccess) {
-    final _$actionInfo = _$SignUpStateBaseActionController.startAction(
-        name: 'SignUpStateBase.signUp');
-    try {
-      return super.signUp(onSuccess);
     } finally {
       _$SignUpStateBaseActionController.endAction(_$actionInfo);
     }
