@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/services/network_service.dart';
 import 'package:pet_shelter_new/states/auth/sing_in_state.dart';
 import 'package:pet_shelter_new/states/auth/sing_up_state.dart';
 import 'package:pet_shelter_new/ui_consts/auth_ui_consts.dart';
@@ -96,11 +98,12 @@ class _AuthWidgetState extends State<AuthWidget> with SingleTickerProviderStateM
   }
 
   Widget _buildTabView(double screenWidth) {
+    final networkService = GetIt.instance.get<NetworkService>();
     return Expanded(
         child: MultiProvider(
           providers: [
-            Provider<SignInState>(create: (_) => SignInState()),
-            Provider<SignUpState>(create: (_) => SignUpState()),
+            Provider<SignInState>(create: (_) => SignInState(networkService: networkService)),
+            Provider<SignUpState>(create: (_) => SignUpState(networkService: networkService)),
           ],
           child: TabBarView(
             clipBehavior: Clip.none,

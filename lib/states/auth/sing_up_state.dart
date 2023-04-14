@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
+import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/models/sign_up_request/sign_up_request.dart';
+import 'package:pet_shelter_new/services/network_service.dart';
 import 'package:pet_shelter_new/states/auth/auth_validator.dart';
 
 part 'sing_up_state.g.dart';
@@ -7,6 +10,10 @@ part 'sing_up_state.g.dart';
 class SignUpState = SignUpStateBase with _$SignUpState;
 
 abstract class SignUpStateBase with Store {
+  final NetworkService networkService;
+
+  SignUpStateBase({required this.networkService});
+
   @observable String? name;
   @observable String? email;
   @observable String? password;
@@ -40,10 +47,20 @@ abstract class SignUpStateBase with Store {
   }
 
   @action
-  void signUp(VoidCallback onSuccess) {
+  Future<void> signUp(VoidCallback onSuccess) async {
     signUpError = null;
     if (!_validateFields()) {
       return;
+    }
+    final result = await networkService.signUp(
+        SignUpRequest(email: email!, password: password!, userName: name!)
+    );
+    if (result.success && result.body != null) {
+      // _localStorage.saveAccessToken(result.body!.accessToken);
+      // _localStorage.saveRefreshToken(result.body!.refreshToken);
+      onSuccess();
+    } else {
+      signUpError = AppStrings.defaultErrorMessage;
     }
   }
 
