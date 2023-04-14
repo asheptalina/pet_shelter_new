@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/auth/sing_up_state.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
+import 'package:provider/provider.dart';
 
 class SignUpWidget extends StatelessWidget {
   final SignUpState state;
@@ -23,7 +25,7 @@ class SignUpWidget extends StatelessWidget {
   }
 
   Widget _buildForm(BuildContext context) {
-    // TODO: AppState appState = Provider.of<AppState>(context);
+    final appState = Provider.of<AppState>(context);
     return Column(
         children: [
           _buildNameField(),
@@ -37,9 +39,7 @@ class SignUpWidget extends StatelessWidget {
           PrimaryButton(
               label: AppStrings.signInButton,
               icon: AppAssets.appMainIcon,
-              onPressed: () => state.signUp(() {
-                // appState.updateState();
-              })
+              onPressed: () => state.signUp(() => appState.updateState())
           )
         ]
     );

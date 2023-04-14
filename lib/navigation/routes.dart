@@ -9,7 +9,18 @@ import 'package:routemaster/routemaster.dart';
 class Routes {
   static final unauthorizedRouteMap = RouteMap(
       routes: {
-        '/': (_) => const MaterialPage(child: AuthWidget())
+        '/': (_) => const MaterialPage(child: AuthWidget()),
+        '/guest': (_) => const CupertinoTabPage(
+            child: MainScreenWidget(),
+            paths: [
+              '/guest/feed',
+              '/guest/create_ad',
+              '/guest/profile'
+            ]
+        ),
+        '/guest/feed': (route) => const MaterialPage(child: FeedWidget()),
+        '/guest/create_ad': (route) => const Redirect('/'),
+        '/guest/profile': (route) => const Redirect('/')
       }
   );
 

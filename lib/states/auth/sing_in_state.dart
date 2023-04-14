@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
-import 'package:pet_shelter_new/models/sign_in_request/sign_in_request.dart';
+import 'package:pet_shelter_new/models/dto/sign_in_request/sign_in_request.dart';
+import 'package:pet_shelter_new/repositories/local_storage/local_storage.dart';
 import 'package:pet_shelter_new/services/network_service.dart';
 import 'package:pet_shelter_new/states/auth/auth_validator.dart';
 
@@ -12,8 +13,9 @@ class SignInState = SignInStateBase with _$SignInState;
 abstract class SignInStateBase with Store {
 
   final NetworkService networkService;
+  final LocalStorage localStorage;
 
-  SignInStateBase({required this.networkService});
+  SignInStateBase({required this.networkService, required this.localStorage});
 
   @observable String? email;
   @observable String? password;
@@ -40,8 +42,8 @@ abstract class SignInStateBase with Store {
     }
     final result = await networkService.signIn(SignInRequest(email: email!, password: password!));
     if (result.success && result.body != null) {
-      // _localStorage.saveAccessToken(result.body!.accessToken);
-      // _localStorage.saveRefreshToken(result.body!.refreshToken);
+      localStorage.saveAccessToken(result.body!.accessToken);
+      localStorage.saveRefreshToken(result.body!.refreshToken);
       onSuccess();
     } else {
       signInError = AppStrings.defaultErrorMessage;

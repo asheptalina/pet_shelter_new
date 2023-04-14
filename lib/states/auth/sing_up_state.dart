@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
-import 'package:pet_shelter_new/models/sign_up_request/sign_up_request.dart';
+import 'package:pet_shelter_new/models/dto/sign_up_request/sign_up_request.dart';
+import 'package:pet_shelter_new/repositories/local_storage/local_storage.dart';
 import 'package:pet_shelter_new/services/network_service.dart';
 import 'package:pet_shelter_new/states/auth/auth_validator.dart';
 
@@ -11,8 +12,9 @@ class SignUpState = SignUpStateBase with _$SignUpState;
 
 abstract class SignUpStateBase with Store {
   final NetworkService networkService;
+  final LocalStorage localStorage;
 
-  SignUpStateBase({required this.networkService});
+  SignUpStateBase({required this.networkService, required this.localStorage});
 
   @observable String? name;
   @observable String? email;
@@ -56,8 +58,8 @@ abstract class SignUpStateBase with Store {
         SignUpRequest(email: email!, password: password!, userName: name!)
     );
     if (result.success && result.body != null) {
-      // _localStorage.saveAccessToken(result.body!.accessToken);
-      // _localStorage.saveRefreshToken(result.body!.refreshToken);
+      localStorage.saveAccessToken(result.body!.accessToken);
+      localStorage.saveRefreshToken(result.body!.refreshToken);
       onSuccess();
     } else {
       signUpError = AppStrings.defaultErrorMessage;
