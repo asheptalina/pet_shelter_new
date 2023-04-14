@@ -20,17 +20,22 @@ class CreateAdDescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Column(
         children: [
           CustomAppBar(
               header: AppStrings.specifyAddressButton,
               onBack: () => state.selectScreen(CreateAdScreen.specifyAddress)
           ),
-          Expanded(
-            child: Observer(
-              builder: (_) => _buildContent(context),
-            )
-          )
+          Expanded(child: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: screenSize.height * 0.75),
+              child: Observer(
+                builder: (_) => _buildContent(context),
+              ),
+            ),
+          ))
         ]
     );
   }
@@ -59,6 +64,7 @@ class CreateAdDescriptionWidget extends StatelessWidget {
 
   Widget _buildTitleTextField() {
     return CustomFormField(
+      value: state.title,
       labelText: AppStrings.adTitleHint,
       onChanged: (value) => state.onTitleChanged(value),
       errorText: state.titleError,

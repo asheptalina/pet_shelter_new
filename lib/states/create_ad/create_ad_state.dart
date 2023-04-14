@@ -71,6 +71,7 @@ abstract class CreateAdStateBase with Store {
   bool _validateFields() {
     titleError = null;
     descriptionError = null;
+    print(title);
     if (title == null || title!.isEmpty) {
       titleError = AppStrings.emptyFieldError;
     } else if (title!.length > 46) {
