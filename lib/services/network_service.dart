@@ -10,5 +10,6 @@ abstract class NetworkService {
   Future<RequestResult<AuthResponse>> signIn(SignInRequest request);
 
   Future<RequestResult<List<Announcement>>> getAds({PetType? petType});
+  Future<RequestResult<Announcement>> getAd(int id);
   // Future<RequestResult<List<Announcement>>> createAd(String accessToken, Announcement announcement);
 }

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
@@ -63,11 +62,7 @@ class FeedItemWidget extends StatelessWidget {
   Widget _buildImage() {
     return AspectRatio(
       aspectRatio: 1,
-      child: CachedNetworkImage(
-        imageUrl: '', // TODO: firebase image
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        errorWidget: (_, url, error) => SvgPicture.asset(AppAssets.placeholderImage),
-      )
+      child: SvgPicture.asset(AppAssets.placeholderImage) // TODO: firebase image
     );
    }
 

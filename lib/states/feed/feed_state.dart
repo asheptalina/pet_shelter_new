@@ -12,12 +12,11 @@ abstract class FeedStateBase with Store {
 
   @observable PetType? petType;
   @observable List<Announcement> announcements = [];
+  @observable Announcement? selectedAnnouncement;
 
   final NetworkService networkService;
 
-  FeedStateBase({required this.networkService}) {
-    // getAds();
-  }
+  FeedStateBase({required this.networkService});
 
   String? feedError;
 
@@ -25,6 +24,11 @@ abstract class FeedStateBase with Store {
   Future<void> onPetTypeChanged(PetType? petType) {
     this.petType = petType;
     return getAds(petType: petType);
+  }
+
+  @action
+  void onSelectedAnnouncement(Announcement? announcement) {
+    selectedAnnouncement = announcement;
   }
 
   @action

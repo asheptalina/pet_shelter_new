@@ -41,6 +41,23 @@ mixin _$FeedState on FeedStateBase, Store {
     });
   }
 
+  late final _$selectedAnnouncementAtom =
+      Atom(name: 'FeedStateBase.selectedAnnouncement', context: context);
+
+  @override
+  Announcement? get selectedAnnouncement {
+    _$selectedAnnouncementAtom.reportRead();
+    return super.selectedAnnouncement;
+  }
+
+  @override
+  set selectedAnnouncement(Announcement? value) {
+    _$selectedAnnouncementAtom.reportWrite(value, super.selectedAnnouncement,
+        () {
+      super.selectedAnnouncement = value;
+    });
+  }
+
   late final _$getAdsAsyncAction =
       AsyncAction('FeedStateBase.getAds', context: context);
 
@@ -64,10 +81,22 @@ mixin _$FeedState on FeedStateBase, Store {
   }
 
   @override
+  void onSelectedAnnouncement(Announcement? announcement) {
+    final _$actionInfo = _$FeedStateBaseActionController.startAction(
+        name: 'FeedStateBase.onSelectedAnnouncement');
+    try {
+      return super.onSelectedAnnouncement(announcement);
+    } finally {
+      _$FeedStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 petType: ${petType},
-announcements: ${announcements}
+announcements: ${announcements},
+selectedAnnouncement: ${selectedAnnouncement}
     ''';
   }
 }

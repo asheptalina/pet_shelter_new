@@ -7,6 +7,7 @@ import 'package:pet_shelter_new/ui_consts/feed_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/loading_widget.dart';
 import 'package:pet_shelter_new/views/feed/feed_item_widget.dart';
+import 'package:routemaster/routemaster.dart';
 
 class FeedWidget extends StatefulWidget {
 
@@ -149,11 +150,17 @@ class _FeedWidgetState extends State<FeedWidget> {
       mainAxisSpacing: FeedUIConstants.gridSpacing,
       crossAxisSpacing: FeedUIConstants.gridSpacing,
       childAspectRatio: FeedUIConstants.gridItemAspectRatio,
-      children: widget.state.announcements.map((ad) => FeedItemWidget(
-          imageUrl: ad.imageUrl,
-          title: ad.title,
-          description: ad.description,
-          address: "dedewdew 45"
+      children: widget.state.announcements.map((ad) => GestureDetector(
+        onTap: () {
+          widget.state.onSelectedAnnouncement(ad);
+          Routemaster.of(context).push('ad');
+        },
+        child: FeedItemWidget(
+            imageUrl: ad.imageUrl,
+            title: ad.title,
+            description: ad.description,
+            address: "Address example" //TODO
+        ),
       )).toList(growable: false),
     );
   }
