@@ -37,7 +37,10 @@ class AdInfoWidget extends StatelessWidget {
                         children: [
                           _buildAddress(),
                           const Spacer(),
-                          PrimaryButton(label: AppStrings.viewOnMapButton, onPressed: () {})
+                          PrimaryButton(
+                              label: AppStrings.viewOnMapButton,
+                              onPressed: () => Routemaster.of(context).push('map')
+                          )
                         ],
                       ),
                       const SizedBox(height: MainUIConstants.verticalPadding),
