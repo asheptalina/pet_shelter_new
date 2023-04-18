@@ -54,6 +54,7 @@ class AppStrings {
   static const String catsTab = "Кошки";
   static const String dogsTab = "Собаки";
   static const String otherTab = "Другие";
+  static const String noAds = "Объявлений пока нет";
 
   // Profile screen
   static const String profileEditing = "Изменение профиля";

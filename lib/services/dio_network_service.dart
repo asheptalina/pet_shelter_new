@@ -106,6 +106,7 @@ class DioNetworkService extends NetworkService {
     try {
       final response = await _dio.get(
           path,
+          queryParameters: queryParams,
           options: Options(
               contentType: Headers.jsonContentType,
               responseType: ResponseType.json,

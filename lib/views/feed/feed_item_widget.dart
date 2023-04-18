@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
+import 'package:pet_shelter_new/ui_consts/feed_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 
 class FeedItemWidget extends StatelessWidget {
@@ -25,7 +26,7 @@ class FeedItemWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
           boxShadow: [
             BoxShadow(
                 color: Colors.black.withOpacity(0.08),
@@ -40,20 +41,20 @@ class FeedItemWidget extends StatelessWidget {
         children: [
           _buildImage(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: FeedUIConstants.gridItemInnerHorizontalPadding),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 8,),
+                const SizedBox(height: FeedUIConstants.gridItemInnerVerticalPadding),
                 _buildTitle(),
-                SizedBox(height: 4,),
+                const SizedBox(height: FeedUIConstants.gridItemInnerVerticalPadding / 2),
                 _buildDescription(),
-                SizedBox(height: 8,),
+                const SizedBox(height: FeedUIConstants.gridItemInnerVerticalPadding),
                 _buildAddress()
               ],
             ),
           ),
+          const Spacer(),
         ],
       )
     );
@@ -63,8 +64,8 @@ class FeedItemWidget extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: CachedNetworkImage(
-        imageUrl: 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
-        placeholder: (context, url) => CircularProgressIndicator(),
+        imageUrl: '', // TODO: firebase image
+        placeholder: (context, url) => const CircularProgressIndicator(),
         errorWidget: (_, url, error) => SvgPicture.asset(AppAssets.placeholderImage),
       )
     );
@@ -80,7 +81,7 @@ class FeedItemWidget extends StatelessWidget {
 
   Widget _buildDescription() {
     return Text(
-      description,
+      '$description\n',
       style: MainUIConstants.labelTextStyle,
       maxLines: 2,
     );
@@ -89,7 +90,11 @@ class FeedItemWidget extends StatelessWidget {
   Widget _buildAddress() {
     return Row(
       children: [
-        SvgPicture.asset(AppAssets.locationMarker, width: 16, height: 21,),
+        SvgPicture.asset(
+          AppAssets.locationMarker,
+          width: FeedUIConstants.locationMarkerSize,
+          height: FeedUIConstants.locationMarkerSize
+        ),
         Text(
           address,
           style: MainUIConstants.labelTextStyle.copyWith(color: AppColors.hintText),

@@ -22,9 +22,9 @@ abstract class FeedStateBase with Store {
   String? feedError;
 
   @action
-  void onPetTypeChanged(PetType? petType) {
+  Future<void> onPetTypeChanged(PetType? petType) {
     this.petType = petType;
-    getAds(petType: petType);
+    return getAds(petType: petType);
   }
 
   @action
@@ -34,14 +34,9 @@ abstract class FeedStateBase with Store {
 
     var result = await networkService.getAds(petType: petType);
 
-    if (result.success) {
-      if (result.body != null) {
-        announcements = result.body!;
-      } else {
-        feedError = AppStrings.defaultErrorMessage;
-      }
+    if (result.success && result.body != null) {
+      announcements = result.body!;
     } else {
-      // TODO: add handlers for different errors
       feedError = AppStrings.defaultErrorMessage;
     }
   }

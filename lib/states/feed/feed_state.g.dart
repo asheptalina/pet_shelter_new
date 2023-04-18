@@ -53,7 +53,7 @@ mixin _$FeedState on FeedStateBase, Store {
       ActionController(name: 'FeedStateBase', context: context);
 
   @override
-  void onPetTypeChanged(PetType? petType) {
+  Future<void> onPetTypeChanged(PetType? petType) {
     final _$actionInfo = _$FeedStateBaseActionController.startAction(
         name: 'FeedStateBase.onPetTypeChanged');
     try {
