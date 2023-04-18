@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_shelter_new/views/auth/auth_widget.dart';
 import 'package:pet_shelter_new/views/create_ad/create_ad_container_widget.dart';
-import 'package:pet_shelter_new/views/feed/feed_widget.dart';
+import 'package:pet_shelter_new/views/feed/feed_container_widget.dart';
 import 'package:pet_shelter_new/views/main_screen_widget.dart';
 import 'package:pet_shelter_new/views/profile/profile_container_widget.dart';
 import 'package:routemaster/routemaster.dart';
@@ -18,7 +18,7 @@ class Routes {
               '/guest/profile'
             ]
         ),
-        '/guest/feed': (route) => const MaterialPage(child: FeedWidget()),
+        '/guest/feed': (route) => const MaterialPage(child: FeedContainerWidget()),
         '/guest/create_ad': (route) => const Redirect('/'),
         '/guest/profile': (route) => const Redirect('/')
       }
@@ -34,7 +34,7 @@ class Routes {
               '/profile'
             ]
         ),
-        '/feed': (route) => const MaterialPage(child: FeedWidget()),
+        '/feed': (route) => const MaterialPage(child: FeedContainerWidget()),
         '/create_ad': (route) => const MaterialPage(child: CreateAdContainerWidget()),
         '/profile': (route) => const MaterialPage(child: ProfileContainerWidget())
       }
