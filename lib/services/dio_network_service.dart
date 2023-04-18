@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:pet_shelter_new/models/dto/announcement/announcement.dart';
 import 'package:pet_shelter_new/models/dto/auth_response/auth_response.dart';
 import 'package:pet_shelter_new/models/dto/sign_in_request/sign_in_request.dart';
 import 'package:pet_shelter_new/models/dto/sign_up_request/sign_up_request.dart';
+import 'package:pet_shelter_new/models/pet_type.dart';
 import 'package:pet_shelter_new/models/request_result.dart';
 import 'package:pet_shelter_new/services/network_service.dart';
 
@@ -31,8 +33,29 @@ class DioNetworkService extends NetworkService {
         data: request,
         parser: (json) => AuthResponse.fromJson(json)
     );
-
   }
+
+  @override
+  Future<RequestResult<List<Announcement>>> getAds({PetType? petType}) {
+    return _get<List<Announcement>>(
+        path: '/announcements',
+        queryParams: petType == null ? {} : {'petType': petType.name},
+        parser: (response) => (response.data as List)
+            .map((json) => Announcement.fromJson(json))
+            .toList()
+    );
+  }
+
+  // @override
+  // Future<RequestResult<List<Announcement>>> createAd(String accessToken, Announcement announcement) {
+  //   return _post<List<Announcement>>(
+  //       path: "/announcements",
+  //       data: announcement,
+  //       parser: (responseBody) {
+  //
+  //       }
+  //   );
+  // }
 
   Future<RequestResult<T>> _post<T, V>({
     required String path,
@@ -78,7 +101,7 @@ class DioNetworkService extends NetworkService {
     required String path,
     String? accessToken,
     required Map<String, String> queryParams,
-    required T Function(String responseBody) parser
+    required T Function(Response response) parser
   }) async {
     try {
       final response = await _dio.get(
@@ -92,14 +115,14 @@ class DioNetworkService extends NetworkService {
       if (response.statusCode == 200) {
         return RequestResult(
             success: true,
-            body: parser(response.data)
+            body: parser(response)
         );
       } else {
         // ErrorResponse.fromJson(jsonDecode(response.body)).message;
         print('Request error. Url: ${path.toString()},\nError: ${response.data}');
         return RequestResult(
             success: false,
-            errorMessage: response.data
+            errorMessage: ""//response.data
         );
       }
     } catch (error) {
@@ -110,4 +133,10 @@ class DioNetworkService extends NetworkService {
       );
     }
   }
+
+}
+
+extension NullableObjectsExtensions<T> on T {
+  bool isSubtypeOf<S>() => <T>[] is List<S>;
+  bool isSupertypeOf<S>() => <S>[] is List<T>;
 }
