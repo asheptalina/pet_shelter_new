@@ -159,7 +159,7 @@ class _FeedWidgetState extends State<FeedWidget> {
             imageUrl: ad.imageUrl,
             title: ad.title,
             description: ad.description,
-            address: "Address example" //TODO
+            address: ad.address
         ),
       )).toList(growable: false),
     );

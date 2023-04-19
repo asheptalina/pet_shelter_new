@@ -90,10 +90,12 @@ class FeedItemWidget extends StatelessWidget {
           width: FeedUIConstants.locationMarkerSize,
           height: FeedUIConstants.locationMarkerSize
         ),
-        Text(
-          address,
-          style: MainUIConstants.labelTextStyle.copyWith(color: AppColors.hintText),
-          maxLines: 2,
+        Expanded(
+          child: Text(
+            address,
+            style: MainUIConstants.labelTextStyle.copyWith(color: AppColors.hintText),
+            maxLines: 2,
+          )
         )
       ],
     );

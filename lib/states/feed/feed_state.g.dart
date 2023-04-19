@@ -29,13 +29,13 @@ mixin _$FeedState on FeedStateBase, Store {
       Atom(name: 'FeedStateBase.announcements', context: context);
 
   @override
-  List<Announcement> get announcements {
+  List<AnnouncementWithAddress> get announcements {
     _$announcementsAtom.reportRead();
     return super.announcements;
   }
 
   @override
-  set announcements(List<Announcement> value) {
+  set announcements(List<AnnouncementWithAddress> value) {
     _$announcementsAtom.reportWrite(value, super.announcements, () {
       super.announcements = value;
     });
@@ -45,13 +45,13 @@ mixin _$FeedState on FeedStateBase, Store {
       Atom(name: 'FeedStateBase.selectedAnnouncement', context: context);
 
   @override
-  Announcement? get selectedAnnouncement {
+  AnnouncementWithAddress? get selectedAnnouncement {
     _$selectedAnnouncementAtom.reportRead();
     return super.selectedAnnouncement;
   }
 
   @override
-  set selectedAnnouncement(Announcement? value) {
+  set selectedAnnouncement(AnnouncementWithAddress? value) {
     _$selectedAnnouncementAtom.reportWrite(value, super.selectedAnnouncement,
         () {
       super.selectedAnnouncement = value;
@@ -81,7 +81,7 @@ mixin _$FeedState on FeedStateBase, Store {
   }
 
   @override
-  void onSelectedAnnouncement(Announcement? announcement) {
+  void onSelectedAnnouncement(AnnouncementWithAddress? announcement) {
     final _$actionInfo = _$FeedStateBaseActionController.startAction(
         name: 'FeedStateBase.onSelectedAnnouncement');
     try {

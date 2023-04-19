@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
-import 'package:pet_shelter_new/models/dto/announcement/announcement.dart';
+import 'package:pet_shelter_new/models/announcement_with_address.dart';
 import 'package:pet_shelter_new/ui_consts/feed_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
@@ -10,7 +10,7 @@ import 'package:pet_shelter_new/views/components/primary_button.dart';
 import 'package:routemaster/routemaster.dart';
 
 class AdInfoWidget extends StatelessWidget {
-  final Announcement ad;
+  final AnnouncementWithAddress ad;
 
   const AdInfoWidget({required this.ad, Key? key}) : super(key: key);
 
@@ -35,8 +35,8 @@ class AdInfoWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _buildAddress(),
-                          const Spacer(),
+                          Expanded(child: _buildAddress(),),
+                          // const Spacer(),
                           PrimaryButton(
                               label: AppStrings.viewOnMapButton,
                               onPressed: () => Routemaster.of(context).push('map')
@@ -70,10 +70,12 @@ class AdInfoWidget extends StatelessWidget {
             width: locationMarkerSize,
             height: locationMarkerSize
         ),
-        Text(
-          "address",
-          style: MainUIConstants.bodyTextStyle,
-          maxLines: 2,
+        Expanded(
+          child: Text(
+            ad.address,
+            style: MainUIConstants.bodyTextStyle,
+            maxLines: 2,
+          )
         )
       ],
     );
