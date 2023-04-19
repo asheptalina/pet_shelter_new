@@ -40,14 +40,18 @@ class CustomAppBar extends StatelessWidget {
     return onBack == null ? const SizedBox.shrink() : Align(
       alignment: Alignment.bottomLeft,
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: () => onBack!(),
-        child: SvgPicture.asset(AppAssets.backIcon, color: Colors.white)
+        child: Padding(
+          padding: const EdgeInsets.only(right: 50),
+          child: SvgPicture.asset(AppAssets.backIcon, color: Colors.white)
+        )
       ),
     );
   }
 
   Widget _buildHeader() {
-    return header == null ? const SizedBox.shrink() :  Align(
+    return header == null ? const SizedBox.shrink() : Align(
         alignment: Alignment.bottomCenter,
         child: Text(
             header!,
@@ -62,8 +66,12 @@ class CustomAppBar extends StatelessWidget {
     return action == null || actionIcon == null ? const SizedBox.shrink() : Align(
       alignment: Alignment.bottomRight,
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: () => action!(),
-        child: SvgPicture.asset(actionIcon!, color: Colors.white)
+        child: Padding(
+          padding: const EdgeInsets.only(left: 50),
+          child: SvgPicture.asset(actionIcon!, color: Colors.white)
+        )
       ),
     );
   }

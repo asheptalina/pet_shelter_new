@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pet_shelter_new/views/auth/auth_widget.dart';
 import 'package:pet_shelter_new/views/create_ad/create_ad_container_widget.dart';
-import 'package:pet_shelter_new/views/feed/feed_widget.dart';
+import 'package:pet_shelter_new/views/feed/ad_info/ad_info_container_widget.dart';
+import 'package:pet_shelter_new/views/feed/feed_container_widget.dart';
+import 'package:pet_shelter_new/views/feed/map_widget.dart';
 import 'package:pet_shelter_new/views/main_screen_widget.dart';
 import 'package:pet_shelter_new/views/profile/profile_container_widget.dart';
 import 'package:routemaster/routemaster.dart';
@@ -18,9 +20,9 @@ class Routes {
               '/guest/profile'
             ]
         ),
-        '/guest/feed': (route) => const MaterialPage(child: FeedWidget()),
-        '/guest/create_ad': (route) => const Redirect('/'),
-        '/guest/profile': (route) => const Redirect('/')
+        '/guest/feed': (_) => const MaterialPage(child: FeedContainerWidget()),
+        '/guest/create_ad': (_) => const Redirect('/'),
+        '/guest/profile': (_) => const Redirect('/')
       }
   );
 
@@ -34,9 +36,11 @@ class Routes {
               '/profile'
             ]
         ),
-        '/feed': (route) => const MaterialPage(child: FeedWidget()),
-        '/create_ad': (route) => const MaterialPage(child: CreateAdContainerWidget()),
-        '/profile': (route) => const MaterialPage(child: ProfileContainerWidget())
+        '/feed': (_) => const MaterialPage(child: FeedContainerWidget()),
+        '/feed/ad': (_) => const MaterialPage(child: AdInfoContainerWidget()),
+        '/feed/ad/map': (_) => const MaterialPage(child: AdInfoMapWidget()),
+        '/create_ad': (_) => const MaterialPage(child: CreateAdContainerWidget()),
+        '/profile': (_) => const MaterialPage(child: ProfileContainerWidget())
       }
     );
 }
