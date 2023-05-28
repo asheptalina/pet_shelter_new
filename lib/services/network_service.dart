@@ -12,7 +12,7 @@ abstract class NetworkService {
 
   Future<RequestResult<List<Announcement>>> getAds({PetType? petType});
   Future<RequestResult<Announcement>> getAd(int id);
-  // Future<RequestResult<List<Announcement>>> createAd(String accessToken, Announcement announcement);
+  Future<RequestResult<List<Announcement>>> createAd(String accessToken, Announcement announcement);
 
   Future<RequestResult<UserData>> getUserInfo(String accessToken);
   Future<RequestResult<UserData>> updateUserInfo(String accessToken, UserData userData);

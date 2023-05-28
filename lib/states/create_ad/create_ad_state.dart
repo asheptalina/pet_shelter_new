@@ -1,9 +1,17 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/models/dto/announcement/announcement.dart';
+import 'package:pet_shelter_new/models/dto/geo_position/geo_position.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
+import 'package:pet_shelter_new/models/request_result.dart';
+import 'package:pet_shelter_new/repositories/local_storage/local_storage.dart';
+import 'package:pet_shelter_new/services/network_service.dart';
+import 'package:uuid/uuid.dart';
 
 part 'create_ad_state.g.dart';
 
@@ -24,6 +32,13 @@ abstract class CreateAdStateBase with Store {
 
   @observable String? titleError;
   @observable String? descriptionError;
+
+  final LocalStorage localStorage;
+  final NetworkService networkService;
+
+  final _storage = FirebaseStorage.instance;
+
+  CreateAdStateBase({required this.localStorage, required this.networkService});
 
   @action
   void selectScreen(CreateAdScreen screen) {
@@ -60,12 +75,44 @@ abstract class CreateAdStateBase with Store {
   }
 
   @action
-  Future<void> createAd() async {
+  Future<void> createAd(VoidCallback onSuccess, VoidCallback onFailure, VoidCallback onUnauthorized) async {
     if (!_validateFields()) {
       return;
     }
-    // TODO: upload real photo to firebase storage
-    const imageUrl = 'https://www.princeton.edu/sites/default/files/styles/half_2x/public/images/2022/02/KOA_Nassau_2697x1517.jpg';
+    String? photoUrl;
+    if (photoFile != null) {
+      final storageRef = _storage.ref();
+      Reference? imagesRef = storageRef.child("images");
+      final fileName = "${const Uuid().v4()}.jpg";
+      final photoRef = imagesRef.child(fileName);
+      try {
+        final TaskSnapshot snapshot = await photoRef.putFile(photoFile!);
+        print(snapshot.ref);
+        photoUrl = await snapshot.ref.getDownloadURL();
+      } on FirebaseException catch (e) {
+        print("Can't load photo to Firebase storage: ${e.message}");
+        onFailure();
+      }
+    }
+    if (photoUrl != null) {
+      final result = await networkService.createAd(
+          localStorage.getAccessToken() ?? '',
+          Announcement(
+              petType: petType,
+              imageUrl: photoUrl,
+              title: title!,
+              description: description!,
+              geoPosition: GeoPosition(lat: coordinate!.latitude, lng: coordinate!.longitude)
+          )
+      );
+      if (result.status == RequestStatus.success && result.body != null) {
+        onSuccess();
+      } else if (result.status == RequestStatus.tokenExpired) {
+        onUnauthorized();
+      } else {
+        onFailure();
+      }
+    }
   }
 
   bool _validateFields() {
