@@ -30,4 +30,14 @@ class SharedPreferencesStorage implements LocalStorage {
   saveRefreshToken(String token) {
     _preferences?.setString(_refreshTokenKey, token);
   }
+
+  @override
+  removeAccessToken() {
+    _preferences?.remove(_accessTokenKey);
+  }
+
+  @override
+  removeRefreshToken() {
+    _preferences?.remove(_refreshTokenKey);
+  }
 }

@@ -9,22 +9,6 @@ part of 'profile_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProfileState on ProfileStateBase, Store {
-  late final _$selectedScreenAtom =
-      Atom(name: 'ProfileStateBase.selectedScreen', context: context);
-
-  @override
-  ProfileScreen get selectedScreen {
-    _$selectedScreenAtom.reportRead();
-    return super.selectedScreen;
-  }
-
-  @override
-  set selectedScreen(ProfileScreen value) {
-    _$selectedScreenAtom.reportWrite(value, super.selectedScreen, () {
-      super.selectedScreen = value;
-    });
-  }
-
   late final _$userNameAtom =
       Atom(name: 'ProfileStateBase.userName', context: context);
 
@@ -89,19 +73,25 @@ mixin _$ProfileState on ProfileStateBase, Store {
     });
   }
 
-  late final _$ProfileStateBaseActionController =
-      ActionController(name: 'ProfileStateBase', context: context);
+  late final _$getUserInfoAsyncAction =
+      AsyncAction('ProfileStateBase.getUserInfo', context: context);
 
   @override
-  void selectScreen(ProfileScreen screen) {
-    final _$actionInfo = _$ProfileStateBaseActionController.startAction(
-        name: 'ProfileStateBase.selectScreen');
-    try {
-      return super.selectScreen(screen);
-    } finally {
-      _$ProfileStateBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> getUserInfo(VoidCallback onUnauthorized) {
+    return _$getUserInfoAsyncAction
+        .run(() => super.getUserInfo(onUnauthorized));
   }
+
+  late final _$saveAsyncAction =
+      AsyncAction('ProfileStateBase.save', context: context);
+
+  @override
+  Future<void> save(VoidCallback onSuccess, VoidCallback onUnauthorized) {
+    return _$saveAsyncAction.run(() => super.save(onSuccess, onUnauthorized));
+  }
+
+  late final _$ProfileStateBaseActionController =
+      ActionController(name: 'ProfileStateBase', context: context);
 
   @override
   void onUserNameChanged(String nameValue) {
@@ -126,20 +116,8 @@ mixin _$ProfileState on ProfileStateBase, Store {
   }
 
   @override
-  void save(VoidCallback onSuccess) {
-    final _$actionInfo = _$ProfileStateBaseActionController.startAction(
-        name: 'ProfileStateBase.save');
-    try {
-      return super.save(onSuccess);
-    } finally {
-      _$ProfileStateBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
-selectedScreen: ${selectedScreen},
 userName: ${userName},
 avatarUrl: ${avatarUrl},
 userNameError: ${userNameError},

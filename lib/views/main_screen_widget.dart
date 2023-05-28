@@ -5,9 +5,11 @@ import 'package:get_it/get_it.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/repositories/local_storage/local_storage.dart';
 import 'package:pet_shelter_new/services/network_service.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
 import 'package:pet_shelter_new/states/feed/feed_state.dart';
+import 'package:pet_shelter_new/states/profile/profile_state.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -28,6 +30,10 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         providers: [
           Provider<CreateAdState>(create: (_) => CreateAdState()),
           Provider<FeedState>(create: (_) => FeedState(networkService: GetIt.instance.get<NetworkService>())),
+          Provider<ProfileState>(create: (_) => ProfileState(
+              localStorage: GetIt.instance.get<LocalStorage>(),
+              networkService: GetIt.instance.get<NetworkService>()
+          )),
         ],
         child: _buildBody()
       ),

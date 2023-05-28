@@ -12,4 +12,10 @@ class AppState extends ChangeNotifier {
   void updateState() {
     notifyListeners();
   }
+
+  void logout() {
+    localStorage.removeAccessToken();
+    localStorage.removeRefreshToken();
+    notifyListeners();
+  }
 }

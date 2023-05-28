@@ -17,7 +17,7 @@ Future<void> main() async {
   await localStorage.init();
   GetIt.instance.registerSingleton<LocalStorage>(localStorage);
   GetIt.instance.registerSingleton<ImagePicker>(ImagePicker());
-  GetIt.instance.registerSingleton<NetworkService>(DioNetworkService());
+  GetIt.instance.registerSingleton<NetworkService>(DioNetworkService(localStorage: localStorage));
 
   runApp(const MyApp());
 }

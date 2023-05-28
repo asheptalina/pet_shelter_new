@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/models/dto/sign_up_request/sign_up_request.dart';
+import 'package:pet_shelter_new/models/request_result.dart';
 import 'package:pet_shelter_new/repositories/local_storage/local_storage.dart';
 import 'package:pet_shelter_new/services/network_service.dart';
 import 'package:pet_shelter_new/states/auth/auth_validator.dart';
@@ -57,7 +58,7 @@ abstract class SignUpStateBase with Store {
     final result = await networkService.signUp(
         SignUpRequest(email: email!, password: password!, userName: name!)
     );
-    if (result.success && result.body != null) {
+    if (result.status == RequestStatus.success && result.body != null) {
       localStorage.saveAccessToken(result.body!.accessToken);
       localStorage.saveRefreshToken(result.body!.refreshToken);
       onSuccess();

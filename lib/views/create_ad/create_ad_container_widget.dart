@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
+import 'package:pet_shelter_new/states/profile/profile_state.dart';
 import 'package:pet_shelter_new/views/create_ad/create_ad_add_photo_widget.dart';
 import 'package:pet_shelter_new/views/create_ad/create_ad_description_widget.dart';
 import 'package:pet_shelter_new/views/create_ad/create_ad_review_photo_widget.dart';
@@ -12,6 +14,9 @@ class CreateAdContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileState = Provider.of<ProfileState>(context);
+    final appState = Provider.of<AppState>(context);
+    profileState.getUserInfo(appState.logout);
     final createAdState = Provider.of<CreateAdState>(context);
     return Observer(builder: (_) => _buildContent(createAdState));
   }

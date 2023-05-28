@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/models/announcement_with_address.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
+import 'package:pet_shelter_new/models/request_result.dart';
 import 'package:pet_shelter_new/services/network_service.dart';
 
 part 'feed_state.g.dart';
@@ -39,7 +40,7 @@ abstract class FeedStateBase with Store {
 
     final result = await networkService.getAds(petType: petType);
 
-    if (result.success && result.body != null) {
+    if (result.status == RequestStatus.success && result.body != null) {
       for (var ad in result.body!) {
         List<Placemark> addresses = await (placemarkFromCoordinates(ad.geoPosition.lat, ad.geoPosition.lng));
         final address = addresses.isEmpty ? '' : '${addresses.first.locality}, ${addresses.first.name}';

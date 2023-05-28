@@ -3,18 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/profile/profile_state.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/profile_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
+import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 
 class ProfileEditWidget extends StatelessWidget {
 
-  final ProfileState state;
-
-  const ProfileEditWidget({required this.state, Key? key}) : super(key: key);
+  const ProfileEditWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +23,17 @@ class ProfileEditWidget extends StatelessWidget {
       children: [
         CustomAppBar(
           header: AppStrings.profileEditing,
-          onBack: () => state.selectScreen(ProfileScreen.view)
+          onBack: () => Routemaster.of(context).history.back()
         ),
         Expanded(child: _buildContent(context))
       ],
     );
   }
 
-  Widget _buildContent(BuildContext context) {
+  Widget _buildContent(BuildContext context, ) {
     final screenSize = MediaQuery.of(context).size;
+    final ProfileState state = Provider.of<ProfileState>(context);
+    final AppState appState = Provider.of<AppState>(context);
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: MainUIConstants.verticalPadding,
@@ -49,7 +52,7 @@ class ProfileEditWidget extends StatelessWidget {
           ),
           const Spacer(),
           PrimaryButton(label: AppStrings.saveButton, onPressed: () {
-            state.save(() { });
+            state.save(() => Routemaster.of(context).replace('/profile'), appState.logout);
           })
         ],
       ),

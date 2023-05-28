@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
+import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/profile/profile_state.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/profile_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/secondary_button.dart';
+import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 
 class ProfileViewWidget extends StatelessWidget {
 
-  final ProfileState state;
-
-  const ProfileViewWidget({required this.state, Key? key}) : super(key: key);
+  const ProfileViewWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ProfileViewWidget extends StatelessWidget {
       children: [
         CustomAppBar(
           actionIcon: AppAssets.editIcon,
-          action: () => state.selectScreen(ProfileScreen.edit),
+          action: () => Routemaster.of(context).push('edit'),
         ),
         Expanded(child: _buildContent(context))
       ],
@@ -29,6 +31,9 @@ class ProfileViewWidget extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final ProfileState state = Provider.of<ProfileState>(context);
+    final AppState appState = Provider.of<AppState>(context);
+    state.getUserInfo(appState.logout);
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: MainUIConstants.verticalPadding,
@@ -40,16 +45,18 @@ class ProfileViewWidget extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: MainUIConstants.formFieldVerticalSpacing),
             child: _buildPhoto(state.avatarUrl, screenSize)
           ),
-          Text(
-            state.userName ?? AppStrings.nameFormFieldHint,
-            style: MainUIConstants.headlineTextStyle,
-            maxLines: 3,
-            textAlign: TextAlign.center
-          ),
+          Observer(builder: (_) => Text(
+              state.userName ?? AppStrings.nameFormFieldHint,
+              style: MainUIConstants.headlineTextStyle,
+              maxLines: 3,
+              textAlign: TextAlign.center
+          )),
           const Spacer(),
-          SecondaryButton(label: AppStrings.logoutButton, icon: AppAssets.logoutIcon, onPressed: () {
-            // TODO: logout
-          })
+          SecondaryButton(
+            label: AppStrings.logoutButton,
+            icon: AppAssets.logoutIcon,
+            onPressed: appState.logout
+          )
         ],
       ),
     );
@@ -61,7 +68,7 @@ class ProfileViewWidget extends StatelessWidget {
       width: screenSize.width * ProfileUIConstants.avatarSizeCof,
       height: screenSize.width * ProfileUIConstants.avatarSizeCof,
       clipBehavior: Clip.hardEdge,
-      child: photoUrl == null ? SvgPicture.asset(AppAssets.placeholderImage) : Image.network(photoUrl),
+      child: SvgPicture.asset(AppAssets.placeholderImage),
     );
   }
 }
