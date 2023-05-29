@@ -35,6 +35,9 @@ class AppStrings {
   static const String addPhotoHeader = "Загрузите фотографию";
   static const String takePhotoButton = "Сделать фото";
   static const String uploadPhotoButton = "Загрузить из галереи";
+  static const askPermissionAlertTitle = 'Для того, чтобы добавить фото необходим доступ к фото/камере';
+  static const cancelButton = 'Отмена';
+  static const goToSettingsButton = 'В настройки';
 
   static const String specifyAddressButton = "Указать адрес";
   static const String specifyAddressHeader = "Где вы видели питомца?";
