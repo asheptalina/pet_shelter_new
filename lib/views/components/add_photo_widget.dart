@@ -32,7 +32,7 @@ class AddPhotoWidget extends StatelessWidget {
             label: AppStrings.uploadPhotoButton,
             icon: AppAssets.galleryIcon,
             width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
-            onPressed: () => _onAddPhoto(context)
+            onPressed: () => _onAddPhoto(context, source: ImageSource.gallery)
         ),
         Padding(
           padding: const EdgeInsets.only(top: 40),
@@ -40,7 +40,7 @@ class AddPhotoWidget extends StatelessWidget {
               label: AppStrings.takePhotoButton,
               icon: AppAssets.photoIcon,
               width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
-              onPressed: () => {}
+              onPressed: () => _onAddPhoto(context, source: ImageSource.camera)
           ),
         ),
         const Spacer(),
@@ -48,8 +48,8 @@ class AddPhotoWidget extends StatelessWidget {
     );
   }
 
-  void _onAddPhoto(BuildContext context) async {
-    XFile? image = await GetIt.instance.get<ImagePicker>().pickImage(source: ImageSource.gallery);
+  void _onAddPhoto(BuildContext context, {required ImageSource source}) async {
+    XFile? image = await GetIt.instance.get<ImagePicker>().pickImage(source: source);
     if (image != null) {
       onSuccess(File(image.path));
     }
