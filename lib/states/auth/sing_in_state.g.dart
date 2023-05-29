@@ -89,6 +89,22 @@ mixin _$SignInState on SignInStateBase, Store {
     });
   }
 
+  late final _$inProgressAtom =
+      Atom(name: 'SignInStateBase.inProgress', context: context);
+
+  @override
+  bool get inProgress {
+    _$inProgressAtom.reportRead();
+    return super.inProgress;
+  }
+
+  @override
+  set inProgress(bool value) {
+    _$inProgressAtom.reportWrite(value, super.inProgress, () {
+      super.inProgress = value;
+    });
+  }
+
   late final _$signInAsyncAction =
       AsyncAction('SignInStateBase.signIn', context: context);
 
@@ -129,7 +145,8 @@ email: ${email},
 password: ${password},
 emailError: ${emailError},
 passwordError: ${passwordError},
-signInError: ${signInError}
+signInError: ${signInError},
+inProgress: ${inProgress}
     ''';
   }
 }

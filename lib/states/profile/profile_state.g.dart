@@ -9,6 +9,14 @@ part of 'profile_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProfileState on ProfileStateBase, Store {
+  Computed<bool>? _$hasChangesComputed;
+
+  @override
+  bool get hasChanges =>
+      (_$hasChangesComputed ??= Computed<bool>(() => super.hasChanges,
+              name: 'ProfileStateBase.hasChanges'))
+          .value;
+
   late final _$userNameAtom =
       Atom(name: 'ProfileStateBase.userName', context: context);
 
@@ -38,6 +46,38 @@ mixin _$ProfileState on ProfileStateBase, Store {
   set avatarUrl(String? value) {
     _$avatarUrlAtom.reportWrite(value, super.avatarUrl, () {
       super.avatarUrl = value;
+    });
+  }
+
+  late final _$currentUserNameAtom =
+      Atom(name: 'ProfileStateBase.currentUserName', context: context);
+
+  @override
+  String? get currentUserName {
+    _$currentUserNameAtom.reportRead();
+    return super.currentUserName;
+  }
+
+  @override
+  set currentUserName(String? value) {
+    _$currentUserNameAtom.reportWrite(value, super.currentUserName, () {
+      super.currentUserName = value;
+    });
+  }
+
+  late final _$currentAvatarUrlAtom =
+      Atom(name: 'ProfileStateBase.currentAvatarUrl', context: context);
+
+  @override
+  String? get currentAvatarUrl {
+    _$currentAvatarUrlAtom.reportRead();
+    return super.currentAvatarUrl;
+  }
+
+  @override
+  set currentAvatarUrl(String? value) {
+    _$currentAvatarUrlAtom.reportWrite(value, super.currentAvatarUrl, () {
+      super.currentAvatarUrl = value;
     });
   }
 
@@ -131,13 +171,27 @@ mixin _$ProfileState on ProfileStateBase, Store {
   }
 
   @override
+  void clearChanges() {
+    final _$actionInfo = _$ProfileStateBaseActionController.startAction(
+        name: 'ProfileStateBase.clearChanges');
+    try {
+      return super.clearChanges();
+    } finally {
+      _$ProfileStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userName: ${userName},
 avatarUrl: ${avatarUrl},
+currentUserName: ${currentUserName},
+currentAvatarUrl: ${currentAvatarUrl},
 avatarFile: ${avatarFile},
 userNameError: ${userNameError},
-saveError: ${saveError}
+saveError: ${saveError},
+hasChanges: ${hasChanges}
     ''';
   }
 }

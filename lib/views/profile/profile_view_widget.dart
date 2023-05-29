@@ -43,7 +43,7 @@ class ProfileViewWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: MainUIConstants.formFieldVerticalSpacing),
-            child:  Observer(builder: (_) => _buildPhoto(state.avatarUrl, screenSize))
+            child: Observer(builder: (_) => _buildPhoto(state.avatarUrl, screenSize))
           ),
           Observer(builder: (_) => Text(
               state.userName ?? AppStrings.nameFormFieldHint,

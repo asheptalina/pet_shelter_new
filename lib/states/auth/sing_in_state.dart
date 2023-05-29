@@ -25,6 +25,8 @@ abstract class SignInStateBase with Store {
   @observable String? passwordError;
   @observable String? signInError;
 
+  @observable bool inProgress = false;
+
   @action
   void onEmailChanged(String emailValue) {
     email = emailValue;
@@ -41,6 +43,7 @@ abstract class SignInStateBase with Store {
     if (!_validateFields()) {
       return;
     }
+    inProgress = true;
     final result = await networkService.signIn(SignInRequest(email: email!, password: password!));
     if (result.status == RequestStatus.success && result.body != null) {
       localStorage.saveAccessToken(result.body!.accessToken);
@@ -49,6 +52,7 @@ abstract class SignInStateBase with Store {
     } else {
       signInError = AppStrings.defaultErrorMessage;
     }
+    inProgress = false;
   }
 
   bool _validateFields() {

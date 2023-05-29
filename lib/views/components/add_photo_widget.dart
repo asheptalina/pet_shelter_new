@@ -10,6 +10,7 @@ import 'package:pet_shelter_new/consts/app_types.dart';
 import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/alert_widget.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
+import 'package:pet_shelter_new/views/components/loading_widget.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
 import 'package:pet_shelter_new/views/components/secondary_button.dart';
 
@@ -24,11 +25,13 @@ class AddPhotoWidget extends StatefulWidget {
 }
 
 class _AddPhotoWidgetState extends State<AddPhotoWidget> {
+
   bool _showGoToSettingsAlert = false;
+  bool _showLoadingIndicator = false;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return _showLoadingIndicator ? const LoadingWidget() : Stack(
       children: [
         Opacity(opacity: _showGoToSettingsAlert ? 0.4 : 1, child: _buildContent(context)),
         _buildGoToSettingsAlert()
@@ -92,8 +95,10 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
   }
 
   void _onAddPhoto({required ImageSource source}) async {
+    setState(() =>_showLoadingIndicator = true);
     XFile? image = await GetIt.instance.get<ImagePicker>().pickImage(source: source);
     if (image != null) {
+      setState(() =>_showLoadingIndicator = false);
       widget.onSuccess(File(image.path));
     }
   }

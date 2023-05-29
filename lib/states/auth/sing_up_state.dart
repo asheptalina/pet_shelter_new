@@ -29,6 +29,8 @@ abstract class SignUpStateBase with Store {
 
   @observable String? signUpError;
 
+  @observable bool inProgress = false;
+
   @action
   void onNameChanged(String nameValue) {
     name = nameValue;
@@ -55,6 +57,7 @@ abstract class SignUpStateBase with Store {
     if (!_validateFields()) {
       return;
     }
+    inProgress = true;
     final result = await networkService.signUp(
         SignUpRequest(email: email!, password: password!, userName: name!)
     );
@@ -65,6 +68,7 @@ abstract class SignUpStateBase with Store {
     } else {
       signUpError = AppStrings.defaultErrorMessage;
     }
+    inProgress = false;
   }
 
   bool _validateFields() {

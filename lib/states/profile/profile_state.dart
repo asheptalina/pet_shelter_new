@@ -16,8 +16,8 @@ part 'profile_state.g.dart';
 class ProfileState = ProfileStateBase with _$ProfileState;
 
 abstract class ProfileStateBase with Store {
-  String? userName;
-  String? avatarUrl;
+  @observable String? userName;
+  @observable String? avatarUrl;
   @observable String? currentUserName;
   @observable String? currentAvatarUrl;
   @observable File? avatarFile;

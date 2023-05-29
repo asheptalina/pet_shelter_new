@@ -6,6 +6,7 @@ import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/auth/sing_up_state.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
+import 'package:pet_shelter_new/views/components/loading_widget.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class SignUpWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) => Column(
+    return Observer(builder: (_) => state.inProgress ? const LoadingWidget() : Column(
       children: [
         _buildErrorMessage(),
         _buildForm(context),
