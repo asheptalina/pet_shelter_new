@@ -19,20 +19,23 @@ class ProfileEditWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileState state = Provider.of<ProfileState>(context);
     return Column(
       children: [
         CustomAppBar(
           header: AppStrings.profileEditing,
-          onBack: () => Routemaster.of(context).history.back()
+          onBack: () {
+            Routemaster.of(context).history.back();
+            state.clearChanges();
+          }
         ),
-        Expanded(child: _buildContent(context))
+        Expanded(child: _buildContent(context, state))
       ],
     );
   }
 
-  Widget _buildContent(BuildContext context, ) {
+  Widget _buildContent(BuildContext context, ProfileState state) {
     final screenSize = MediaQuery.of(context).size;
-    final ProfileState state = Provider.of<ProfileState>(context);
     final AppState appState = Provider.of<AppState>(context);
     return Padding(
       padding: EdgeInsets.symmetric(
