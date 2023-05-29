@@ -7,36 +7,51 @@ import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/profile/profile_state.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/profile_ui_consts.dart';
+import 'package:pet_shelter_new/views/components/alert_widget.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
+import 'package:pet_shelter_new/views/components/secondary_button.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 
-class ProfileEditWidget extends StatelessWidget {
-
+class ProfileEditWidget extends StatefulWidget {
   const ProfileEditWidget({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileEditWidget> createState() => _ProfileEditWidgetState();
+}
+
+class _ProfileEditWidgetState extends State<ProfileEditWidget> {
+  bool _showSaveAlert = false;
 
   @override
   Widget build(BuildContext context) {
     final ProfileState state = Provider.of<ProfileState>(context);
-    return Column(
+    return Stack(
       children: [
-        CustomAppBar(
-          header: AppStrings.profileEditing,
-          onBack: () {
-            Routemaster.of(context).history.back();
-            state.clearChanges();
-          }
+        Opacity(
+          opacity: _showSaveAlert ? 0.4 : 1,
+          child: Column(
+            children: [
+              CustomAppBar(
+                  header: AppStrings.profileEditing,
+                  onBack: () {
+                    Routemaster.of(context).history.back();
+                    state.clearChanges();
+                  }
+              ),
+              Expanded(child: _buildContent(context, state))
+            ],
+          )
         ),
-        Expanded(child: _buildContent(context, state))
+        _buildSaveAlert(state)
       ],
     );
   }
 
   Widget _buildContent(BuildContext context, ProfileState state) {
     final screenSize = MediaQuery.of(context).size;
-    final AppState appState = Provider.of<AppState>(context);
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: MainUIConstants.verticalPadding,
@@ -54,12 +69,14 @@ class ProfileEditWidget extends StatelessWidget {
               onChanged: (value) => state.onUserNameChanged(value)
           ),
           const Spacer(),
-          PrimaryButton(label: AppStrings.saveButton, onPressed: () {
-            state.save(() {
-              Routemaster.of(context).replace('/profile');
-              state.clearChanges();
-          }, appState.logout);
-          })
+          PrimaryButton(
+              label: AppStrings.saveButton,
+              onPressed: () {
+                if (state.hasChanges) {
+                  setState(() => _showSaveAlert = true);
+                }
+              }
+          )
         ],
       ),
     );
@@ -116,5 +133,28 @@ class ProfileEditWidget extends StatelessWidget {
           )
       )
     );
+  }
+
+  Widget _buildSaveAlert(ProfileState state) {
+    final AppState appState = Provider.of<AppState>(context);
+    return _showSaveAlert ? AlertWidget(
+        title: AppStrings.saveAlert,
+        actions: [
+          SecondaryButton(
+              label: AppStrings.doNotSaveButton,
+              onPressed: () => setState(() => _showSaveAlert = false)
+          ),
+          PrimaryButton(label: AppStrings.saveButton, onPressed: () {
+            setState(() => _showSaveAlert = false);
+            state.save(
+              () {
+                Routemaster.of(context).replace('/profile');
+                state.clearChanges();
+              },
+              appState.logout
+            );
+          })
+        ]
+    ) : const SizedBox.shrink();
   }
 }

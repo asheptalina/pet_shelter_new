@@ -33,7 +33,7 @@ class AlertWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: Colors.white
       ),
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       child: Column(
         children: [
           Padding(
