@@ -32,7 +32,9 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
               localStorage: GetIt.instance.get<LocalStorage>(),
               networkService: GetIt.instance.get<NetworkService>()
           )),
-          Provider<FeedState>(create: (_) => FeedState(networkService: GetIt.instance.get<NetworkService>())),
+          Provider<FeedState>(create: (_) => FeedState(
+              networkService: GetIt.instance.get<NetworkService>()
+          )),
           Provider<ProfileState>(create: (_) => ProfileState(
               localStorage: GetIt.instance.get<LocalStorage>(),
               networkService: GetIt.instance.get<NetworkService>()

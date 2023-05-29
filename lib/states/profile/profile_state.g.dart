@@ -41,6 +41,22 @@ mixin _$ProfileState on ProfileStateBase, Store {
     });
   }
 
+  late final _$avatarFileAtom =
+      Atom(name: 'ProfileStateBase.avatarFile', context: context);
+
+  @override
+  File? get avatarFile {
+    _$avatarFileAtom.reportRead();
+    return super.avatarFile;
+  }
+
+  @override
+  set avatarFile(File? value) {
+    _$avatarFileAtom.reportWrite(value, super.avatarFile, () {
+      super.avatarFile = value;
+    });
+  }
+
   late final _$userNameErrorAtom =
       Atom(name: 'ProfileStateBase.userNameError', context: context);
 
@@ -82,6 +98,16 @@ mixin _$ProfileState on ProfileStateBase, Store {
         .run(() => super.getUserInfo(onUnauthorized));
   }
 
+  late final _$savePhotoAsyncAction =
+      AsyncAction('ProfileStateBase.savePhoto', context: context);
+
+  @override
+  Future<void> savePhoto(
+      File photoFile, VoidCallback onSuccess, VoidCallback onFailure) {
+    return _$savePhotoAsyncAction
+        .run(() => super.savePhoto(photoFile, onSuccess, onFailure));
+  }
+
   late final _$saveAsyncAction =
       AsyncAction('ProfileStateBase.save', context: context);
 
@@ -105,21 +131,11 @@ mixin _$ProfileState on ProfileStateBase, Store {
   }
 
   @override
-  void onAvatarUrlChanged(String passwordValue) {
-    final _$actionInfo = _$ProfileStateBaseActionController.startAction(
-        name: 'ProfileStateBase.onAvatarUrlChanged');
-    try {
-      return super.onAvatarUrlChanged(passwordValue);
-    } finally {
-      _$ProfileStateBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 userName: ${userName},
 avatarUrl: ${avatarUrl},
+avatarFile: ${avatarFile},
 userNameError: ${userNameError},
 saveError: ${saveError}
     ''';

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "997843736166",
+    "project_id": "petshelter-6ce17",
+    "storage_bucket": "petshelter-6ce17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997843736166:android:5456f3e6971996392f3fa7",
+        "android_client_info": {
+          "package_name": "com.issart.pet_shelter_new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997843736166-lfntrb2052shc5vmdvjnraj6k0bhcckk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv-xiwddx-8MAwlfLlG1_SsepXollpmS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997843736166-lfntrb2052shc5vmdvjnraj6k0bhcckk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

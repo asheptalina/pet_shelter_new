@@ -43,7 +43,7 @@ class ProfileEditWidget extends StatelessWidget {
         children: [
           Padding(
               padding: const EdgeInsets.only(bottom: MainUIConstants.formFieldVerticalSpacing),
-              child: _buildPhoto(state.avatarUrl, screenSize)
+              child: _buildPhoto(context, state.currentAvatarUrl ?? state.avatarUrl, screenSize)
           ),
           CustomFormField(
               value: state.userName,
@@ -52,14 +52,17 @@ class ProfileEditWidget extends StatelessWidget {
           ),
           const Spacer(),
           PrimaryButton(label: AppStrings.saveButton, onPressed: () {
-            state.save(() => Routemaster.of(context).replace('/profile'), appState.logout);
+            state.save(() {
+              Routemaster.of(context).replace('/profile');
+              state.clearChanges();
+          }, appState.logout);
           })
         ],
       ),
     );
   }
 
-  Widget _buildPhoto(String? photoUrl, Size screenSize) {
+  Widget _buildPhoto(BuildContext context, String? photoUrl, Size screenSize) {
     final avatarSize = screenSize.width * ProfileUIConstants.avatarSizeCof;
     return Stack(
       alignment: AlignmentDirectional.bottomStart,
@@ -70,22 +73,29 @@ class ProfileEditWidget extends StatelessWidget {
             width: avatarSize,
             height: avatarSize,
             clipBehavior: Clip.hardEdge,
-            child: photoUrl == null ? SvgPicture.asset(AppAssets.placeholderImage) : Image.network(photoUrl),
-          ),
+            child: photoUrl == null ? SvgPicture.asset(AppAssets.placeholderImage) : Image.network(
+              photoUrl,
+              fit: BoxFit.fill,
+              loadingBuilder: (_, child, loadingProgress) => loadingProgress == null
+                  ? child
+                  : SvgPicture.asset(AppAssets.placeholderImage),
+              errorBuilder: (context, err, _) => SvgPicture.asset(AppAssets.placeholderImage),
+            )
+          )
         ),
         Center(
           child: Padding(
             padding: EdgeInsets.only(left: avatarSize - ProfileUIConstants.addPhotoButtonSize),
-            child: _buildAddPhotoButton()
+            child: _buildAddPhotoButton(context)
           ),
         )
       ],
     );
   }
 
-  Widget _buildAddPhotoButton() {
+  Widget _buildAddPhotoButton(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, // TODO: photo
+      onTap: () => Routemaster.of(context).push('photo'),
       child: Container(
           decoration: BoxDecoration(
             color: AppColors.accent,

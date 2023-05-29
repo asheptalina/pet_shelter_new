@@ -5,6 +5,7 @@ import 'package:pet_shelter_new/views/feed/ad_info/ad_info_container_widget.dart
 import 'package:pet_shelter_new/views/feed/feed_container_widget.dart';
 import 'package:pet_shelter_new/views/feed/map_widget.dart';
 import 'package:pet_shelter_new/views/main_screen_widget.dart';
+import 'package:pet_shelter_new/views/profile/profile_add_photo_widget.dart';
 import 'package:pet_shelter_new/views/profile/profile_edit_widget.dart';
 import 'package:pet_shelter_new/views/profile/profile_view_widget.dart';
 import 'package:routemaster/routemaster.dart';
@@ -27,6 +28,7 @@ class Routes {
         '/guest/create_ad': (_) => const Redirect('/'),
         '/guest/profile': (_) => const Redirect('/'),
         '/guest/profile/edit': (_) => const Redirect('/'),
+        '/guest/profile/edit/photo': (_) => const Redirect('/'),
         '/profile': (_) => const Redirect('/guest/profile')
       }
   );
@@ -46,7 +48,8 @@ class Routes {
         '/feed/ad/map': (_) => const MaterialPage(child: AdInfoMapWidget()),
         '/create_ad': (_) => const MaterialPage(child: CreateAdContainerWidget()),
         '/profile': (_) => const MaterialPage(child: ProfileViewWidget()),
-        '/profile/edit': (_) => const MaterialPage(child: ProfileEditWidget())
+        '/profile/edit': (_) => const MaterialPage(child: ProfileEditWidget()),
+        '/profile/edit/photo': (_) => const MaterialPage(child: ProfileAddPhotoWidget())
       }
     );
 }

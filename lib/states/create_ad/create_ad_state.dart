@@ -87,7 +87,6 @@ abstract class CreateAdStateBase with Store {
       final photoRef = imagesRef.child(fileName);
       try {
         final TaskSnapshot snapshot = await photoRef.putFile(photoFile!);
-        print(snapshot.ref);
         photoUrl = await snapshot.ref.getDownloadURL();
       } on FirebaseException catch (e) {
         print("Can't load photo to Firebase storage: ${e.message}");
