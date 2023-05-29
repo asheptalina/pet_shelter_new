@@ -30,10 +30,7 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Opacity(
-          opacity: _showGoToSettingsAlert ? 0.4 : 1,
-          child: _buildContent(context)
-        ),
+        Opacity(opacity: _showGoToSettingsAlert ? 0.4 : 1, child: _buildContent(context)),
         _buildGoToSettingsAlert()
       ],
     );
@@ -51,11 +48,8 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
             icon: AppAssets.galleryIcon,
             width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
             onPressed: () async {
-              final permissionGranted = await Permission.mediaLibrary.isGranted;
-              if (!permissionGranted) {
-                setState(() {
-                  _showGoToSettingsAlert = true;
-                });
+              if (!await Permission.photos.request().isGranted) {
+                setState(() => _showGoToSettingsAlert = true);
               } else {
                 _onAddPhoto(source: ImageSource.gallery);
               }
@@ -68,11 +62,10 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
               icon: AppAssets.photoIcon,
               width: screenSize.width * CreateAdUIConstants.photoButtonWidthCof,
               onPressed: () async {
-                final permissionGranted = await Permission.camera.isGranted;
-                if (!permissionGranted) {
+                if (!await Permission.camera.request().isGranted) {
                   setState(() => _showGoToSettingsAlert = true);
                 } else {
-                  _onAddPhoto(source: ImageSource.gallery);
+                  _onAddPhoto(source: ImageSource.camera);
                 }
               }
           ),
@@ -84,7 +77,7 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
 
   Widget _buildGoToSettingsAlert() {
     return _showGoToSettingsAlert ? AlertWidget(
-      title: AppStrings.askPermissionAlertTitle,
+      title: AppStrings.askPhotoPermissionAlertTitle,
       actions: [
           SecondaryButton(
             label: AppStrings.cancelButton,
