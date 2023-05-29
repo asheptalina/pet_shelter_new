@@ -131,7 +131,8 @@ class _CreateAdSpecifyAddressWidgetState extends State<CreateAdSpecifyAddressWid
         builder: (_) => SvgPicture.asset(AppAssets.locationMarker),
         width: CreateAdUIConstants.mapMarkerSize,
         height: CreateAdUIConstants.mapMarkerSize,
-        anchorPos: AnchorPos.align(AnchorAlign.top)
+        anchorPos: AnchorPos.align(AnchorAlign.top),
+        rotate: true
       ));
     }
     return FlutterMap(

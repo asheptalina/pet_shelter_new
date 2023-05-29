@@ -21,7 +21,8 @@ class AdInfoMapWidget extends StatelessWidget {
           builder: (_) => SvgPicture.asset(AppAssets.locationMarker),
           width: CreateAdUIConstants.mapMarkerSize,
           height: CreateAdUIConstants.mapMarkerSize,
-          anchorPos: AnchorPos.align(AnchorAlign.top)
+          anchorPos: AnchorPos.align(AnchorAlign.top),
+          rotate: true
       )
     ];
     return Column(
