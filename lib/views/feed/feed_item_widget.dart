@@ -64,7 +64,7 @@ class FeedItemWidget extends StatelessWidget {
       aspectRatio: 1,
       child: Image.network(
           imageUrl,
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
           loadingBuilder: (_, child, loadingProgress) => loadingProgress == null
               ? child
               : SvgPicture.asset(AppAssets.placeholderImage),

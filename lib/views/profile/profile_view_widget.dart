@@ -70,7 +70,7 @@ class ProfileViewWidget extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: photoUrl == null ? SvgPicture.asset(AppAssets.placeholderImage) : Image.network(
         photoUrl,
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
         loadingBuilder: (_, child, loadingProgress) => loadingProgress == null
             ? child
             : SvgPicture.asset(AppAssets.placeholderImage),
