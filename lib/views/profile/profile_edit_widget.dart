@@ -19,20 +19,23 @@ class ProfileEditWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileState state = Provider.of<ProfileState>(context);
     return Column(
       children: [
         CustomAppBar(
           header: AppStrings.profileEditing,
-          onBack: () => Routemaster.of(context).history.back()
+          onBack: () {
+            Routemaster.of(context).history.back();
+            state.clearChanges();
+          }
         ),
-        Expanded(child: _buildContent(context))
+        Expanded(child: _buildContent(context, state))
       ],
     );
   }
 
-  Widget _buildContent(BuildContext context, ) {
+  Widget _buildContent(BuildContext context, ProfileState state) {
     final screenSize = MediaQuery.of(context).size;
-    final ProfileState state = Provider.of<ProfileState>(context);
     final AppState appState = Provider.of<AppState>(context);
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -43,7 +46,7 @@ class ProfileEditWidget extends StatelessWidget {
         children: [
           Padding(
               padding: const EdgeInsets.only(bottom: MainUIConstants.formFieldVerticalSpacing),
-              child: _buildPhoto(state.avatarUrl, screenSize)
+              child: _buildPhoto(context, state.currentAvatarUrl ?? state.avatarUrl, screenSize)
           ),
           CustomFormField(
               value: state.userName,
@@ -52,14 +55,17 @@ class ProfileEditWidget extends StatelessWidget {
           ),
           const Spacer(),
           PrimaryButton(label: AppStrings.saveButton, onPressed: () {
-            state.save(() => Routemaster.of(context).replace('/profile'), appState.logout);
+            state.save(() {
+              Routemaster.of(context).replace('/profile');
+              state.clearChanges();
+          }, appState.logout);
           })
         ],
       ),
     );
   }
 
-  Widget _buildPhoto(String? photoUrl, Size screenSize) {
+  Widget _buildPhoto(BuildContext context, String? photoUrl, Size screenSize) {
     final avatarSize = screenSize.width * ProfileUIConstants.avatarSizeCof;
     return Stack(
       alignment: AlignmentDirectional.bottomStart,
@@ -70,22 +76,29 @@ class ProfileEditWidget extends StatelessWidget {
             width: avatarSize,
             height: avatarSize,
             clipBehavior: Clip.hardEdge,
-            child: photoUrl == null ? SvgPicture.asset(AppAssets.placeholderImage) : Image.network(photoUrl),
-          ),
+            child: photoUrl == null ? SvgPicture.asset(AppAssets.placeholderImage) : Image.network(
+              photoUrl,
+              fit: BoxFit.fill,
+              loadingBuilder: (_, child, loadingProgress) => loadingProgress == null
+                  ? child
+                  : SvgPicture.asset(AppAssets.placeholderImage),
+              errorBuilder: (context, err, _) => SvgPicture.asset(AppAssets.placeholderImage),
+            )
+          )
         ),
         Center(
           child: Padding(
             padding: EdgeInsets.only(left: avatarSize - ProfileUIConstants.addPhotoButtonSize),
-            child: _buildAddPhotoButton()
+            child: _buildAddPhotoButton(context)
           ),
         )
       ],
     );
   }
 
-  Widget _buildAddPhotoButton() {
+  Widget _buildAddPhotoButton(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, // TODO: photo
+      onTap: () => Routemaster.of(context).push('photo'),
       child: Container(
           decoration: BoxDecoration(
             color: AppColors.accent,

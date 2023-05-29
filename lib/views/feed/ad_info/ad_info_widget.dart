@@ -58,7 +58,14 @@ class AdInfoWidget extends StatelessWidget {
   Widget _buildImage() {
     return AspectRatio(
         aspectRatio: 1,
-        child: SvgPicture.asset(AppAssets.placeholderImage)
+        child: Image.network(
+            ad.imageUrl,
+            fit: BoxFit.fill,
+            loadingBuilder: (_, child, loadingProgress) => loadingProgress == null
+                ? child
+                : SvgPicture.asset(AppAssets.placeholderImage),
+            errorBuilder: (context, err, _) => SvgPicture.asset(AppAssets.placeholderImage),
+        )
     );
   }
 

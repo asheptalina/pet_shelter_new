@@ -141,8 +141,10 @@ mixin _$CreateAdState on CreateAdStateBase, Store {
       AsyncAction('CreateAdStateBase.createAd', context: context);
 
   @override
-  Future<void> createAd() {
-    return _$createAdAsyncAction.run(() => super.createAd());
+  Future<void> createAd(VoidCallback onSuccess, VoidCallback onFailure,
+      VoidCallback onUnauthorized) {
+    return _$createAdAsyncAction
+        .run(() => super.createAd(onSuccess, onFailure, onUnauthorized));
   }
 
   late final _$CreateAdStateBaseActionController =

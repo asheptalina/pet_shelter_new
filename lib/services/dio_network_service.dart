@@ -58,16 +58,17 @@ class DioNetworkService extends NetworkService {
         parser: (response) => Announcement.fromJson(response.data)
     );
   }
-  // @override
-  // Future<RequestResult<List<Announcement>>> createAd(String accessToken, Announcement announcement) {
-  //   return _post<List<Announcement>>(
-  //       path: "/announcements",
-  //       data: announcement,
-  //       parser: (responseBody) {
-  //
-  //       }
-  //   );
-  // }
+
+  @override
+  Future<RequestResult<List<Announcement>>> createAd(String accessToken, Announcement announcement) {
+    return _post(
+        path: "/announcements",
+        data: announcement,
+        parser: (response) => (response.data as List)
+            .map((json) => Announcement.fromJson(json))
+            .toList()
+    );
+  }
 
   @override
   Future<RequestResult<UserData>> getUserInfo(String accessToken) {

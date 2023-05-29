@@ -5,12 +5,14 @@ import 'package:pet_shelter_new/consts/app_assets.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
+import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
 import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
+import 'package:provider/provider.dart';
 
 class CreateAdDescriptionWidget extends StatelessWidget {
 
@@ -56,7 +58,7 @@ class CreateAdDescriptionWidget extends StatelessWidget {
           ),
           Expanded(child: _buildDescriptionTextField()),
           const Spacer(),
-          _buildCreateButton()
+          _buildCreateButton(context)
         ],
       ),
     );
@@ -81,8 +83,16 @@ class CreateAdDescriptionWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildCreateButton() {
-    return PrimaryButton(label: AppStrings.createAdButton, onPressed: () => state.createAd());
+  Widget _buildCreateButton(BuildContext context) {
+    final AppState appState = Provider.of<AppState>(context);
+    return PrimaryButton(
+        label: AppStrings.createAdButton,
+        onPressed: () => state.createAd(
+            () {},
+            () {},
+            appState.logout
+        )
+    );
   }
 
   Widget _buildPetTypeSelectors(Size screenSize) {

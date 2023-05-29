@@ -28,8 +28,13 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       resizeToAvoidBottomInset: false,
       body: MultiProvider(
         providers: [
-          Provider<CreateAdState>(create: (_) => CreateAdState()),
-          Provider<FeedState>(create: (_) => FeedState(networkService: GetIt.instance.get<NetworkService>())),
+          Provider<CreateAdState>(create: (_) => CreateAdState(
+              localStorage: GetIt.instance.get<LocalStorage>(),
+              networkService: GetIt.instance.get<NetworkService>()
+          )),
+          Provider<FeedState>(create: (_) => FeedState(
+              networkService: GetIt.instance.get<NetworkService>()
+          )),
           Provider<ProfileState>(create: (_) => ProfileState(
               localStorage: GetIt.instance.get<LocalStorage>(),
               networkService: GetIt.instance.get<NetworkService>()

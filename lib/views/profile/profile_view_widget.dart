@@ -43,7 +43,7 @@ class ProfileViewWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: MainUIConstants.formFieldVerticalSpacing),
-            child: _buildPhoto(state.avatarUrl, screenSize)
+            child:  Observer(builder: (_) => _buildPhoto(state.avatarUrl, screenSize))
           ),
           Observer(builder: (_) => Text(
               state.userName ?? AppStrings.nameFormFieldHint,
@@ -68,7 +68,14 @@ class ProfileViewWidget extends StatelessWidget {
       width: screenSize.width * ProfileUIConstants.avatarSizeCof,
       height: screenSize.width * ProfileUIConstants.avatarSizeCof,
       clipBehavior: Clip.hardEdge,
-      child: SvgPicture.asset(AppAssets.placeholderImage),
+      child: photoUrl == null ? SvgPicture.asset(AppAssets.placeholderImage) : Image.network(
+        photoUrl,
+        fit: BoxFit.fill,
+        loadingBuilder: (_, child, loadingProgress) => loadingProgress == null
+            ? child
+            : SvgPicture.asset(AppAssets.placeholderImage),
+        errorBuilder: (context, err, _) => SvgPicture.asset(AppAssets.placeholderImage),
+      )
     );
   }
 }
