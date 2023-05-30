@@ -58,6 +58,16 @@ mixin _$FeedState on FeedStateBase, Store {
     });
   }
 
+  late final _$onSelectedAnnouncementWithoutAddressAsyncAction = AsyncAction(
+      'FeedStateBase.onSelectedAnnouncementWithoutAddress',
+      context: context);
+
+  @override
+  Future<void> onSelectedAnnouncementWithoutAddress(Announcement announcement) {
+    return _$onSelectedAnnouncementWithoutAddressAsyncAction
+        .run(() => super.onSelectedAnnouncementWithoutAddress(announcement));
+  }
+
   late final _$getAdsAsyncAction =
       AsyncAction('FeedStateBase.getAds', context: context);
 

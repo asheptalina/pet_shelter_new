@@ -2,6 +2,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/models/announcement_with_address.dart';
+import 'package:pet_shelter_new/models/dto/announcement/announcement.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
 import 'package:pet_shelter_new/models/request_result.dart';
 import 'package:pet_shelter_new/services/network_service.dart';
@@ -31,6 +32,13 @@ abstract class FeedStateBase with Store {
   @action
   void onSelectedAnnouncement(AnnouncementWithAddress? announcement) {
     selectedAnnouncement = announcement;
+  }
+
+  @action
+  Future<void> onSelectedAnnouncementWithoutAddress(Announcement announcement) async {
+    List<Placemark> addresses = await (placemarkFromCoordinates(announcement.geoPosition.lat, announcement.geoPosition.lng));
+    final address = addresses.isEmpty ? '' : '${addresses.first.locality}, ${addresses.first.name}';
+    selectedAnnouncement = AnnouncementWithAddress(announcement: announcement, address: address);
   }
 
   @action

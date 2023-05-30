@@ -33,6 +33,8 @@ abstract class CreateAdStateBase with Store {
   @observable String? titleError;
   @observable String? descriptionError;
 
+  @observable bool inProgress = false;
+
   final LocalStorage localStorage;
   final NetworkService networkService;
 
@@ -75,10 +77,15 @@ abstract class CreateAdStateBase with Store {
   }
 
   @action
-  Future<void> createAd(VoidCallback onSuccess, VoidCallback onFailure, VoidCallback onUnauthorized) async {
+  Future<void> createAd(
+      void Function(Announcement) onSuccess,
+      VoidCallback onFailure,
+      VoidCallback onUnauthorized
+  ) async {
     if (!_validateFields()) {
       return;
     }
+    inProgress = true;
     String? photoUrl;
     if (photoFile != null) {
       final storageRef = _storage.ref();
@@ -90,6 +97,7 @@ abstract class CreateAdStateBase with Store {
         photoUrl = await snapshot.ref.getDownloadURL();
       } on FirebaseException catch (e) {
         print("Can't load photo to Firebase storage: ${e.message}");
+        inProgress = false;
         onFailure();
       }
     }
@@ -105,13 +113,14 @@ abstract class CreateAdStateBase with Store {
           )
       );
       if (result.status == RequestStatus.success && result.body != null) {
-        onSuccess();
+        onSuccess(result.body!.last); // TODO: use GET ads/id. Now it doesn't work
       } else if (result.status == RequestStatus.tokenExpired) {
         onUnauthorized();
       } else {
         onFailure();
       }
     }
+    inProgress = false;
   }
 
   bool _validateFields() {

@@ -137,12 +137,28 @@ mixin _$CreateAdState on CreateAdStateBase, Store {
     });
   }
 
+  late final _$inProgressAtom =
+      Atom(name: 'CreateAdStateBase.inProgress', context: context);
+
+  @override
+  bool get inProgress {
+    _$inProgressAtom.reportRead();
+    return super.inProgress;
+  }
+
+  @override
+  set inProgress(bool value) {
+    _$inProgressAtom.reportWrite(value, super.inProgress, () {
+      super.inProgress = value;
+    });
+  }
+
   late final _$createAdAsyncAction =
       AsyncAction('CreateAdStateBase.createAd', context: context);
 
   @override
-  Future<void> createAd(VoidCallback onSuccess, VoidCallback onFailure,
-      VoidCallback onUnauthorized) {
+  Future<void> createAd(void Function(Announcement) onSuccess,
+      VoidCallback onFailure, VoidCallback onUnauthorized) {
     return _$createAdAsyncAction
         .run(() => super.createAd(onSuccess, onFailure, onUnauthorized));
   }
@@ -226,7 +242,8 @@ petType: ${petType},
 title: ${title},
 description: ${description},
 titleError: ${titleError},
-descriptionError: ${descriptionError}
+descriptionError: ${descriptionError},
+inProgress: ${inProgress}
     ''';
   }
 }

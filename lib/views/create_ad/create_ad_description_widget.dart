@@ -7,12 +7,16 @@ import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
 import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
+import 'package:pet_shelter_new/states/feed/feed_state.dart';
 import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
 import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
+
+import '../components/loading_widget.dart';
 
 class CreateAdDescriptionWidget extends StatelessWidget {
 
@@ -30,11 +34,11 @@ class CreateAdDescriptionWidget extends StatelessWidget {
               onBack: () => state.selectScreen(CreateAdScreen.specifyAddress)
           ),
           Expanded(child: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: ConstrainedBox(
               constraints: BoxConstraints(maxHeight: screenSize.height * 0.75),
               child: Observer(
-                builder: (_) => _buildContent(context),
+                builder: (_) => state.inProgress ? const LoadingWidget() : _buildContent(context),
               ),
             ),
           ))
@@ -88,8 +92,15 @@ class CreateAdDescriptionWidget extends StatelessWidget {
     return PrimaryButton(
         label: AppStrings.createAdButton,
         onPressed: () => state.createAd(
-            () {},
-            () {},
+            (announcement) async {
+              // TODO: success overlay
+              final FeedState feedState = Provider.of<FeedState>(context);
+              await feedState.onSelectedAnnouncementWithoutAddress(announcement);
+              Routemaster.of(context).replace('/feed/ad');
+            },
+            () {
+              // TODO: error overlay
+            },
             appState.logout
         )
     );
