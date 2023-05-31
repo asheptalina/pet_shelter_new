@@ -78,7 +78,7 @@ class _CreateAdSpecifyAddressWidgetState extends State<CreateAdSpecifyAddressWid
     return Column(
       children: [
         CustomAppBar(
-            header: AppStrings.specifyAddressButton,
+            header: AppStrings.specifyAddressHeader,
             onBack: () => widget.state.selectScreen(CreateAdScreen.reviewPhoto)
         ),
         Expanded(child: _buildContent(context))

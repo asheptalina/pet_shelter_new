@@ -76,7 +76,7 @@ class FeedItemWidget extends StatelessWidget {
   Widget _buildTitle() {
     return Text(
       title,
-      style: MainUIConstants.bodyBoldTextStyle,
+      style: MainUIConstants.textStyleSize16Weight700,
       maxLines: 1,
     );
   }
@@ -84,7 +84,7 @@ class FeedItemWidget extends StatelessWidget {
   Widget _buildDescription() {
     return Text(
       '$description\n',
-      style: MainUIConstants.labelTextStyle,
+      style: MainUIConstants.textStyleSize12Weight400,
       maxLines: 2,
     );
   }
@@ -100,7 +100,7 @@ class FeedItemWidget extends StatelessWidget {
         Expanded(
           child: Text(
             address,
-            style: MainUIConstants.labelTextStyle.copyWith(color: AppColors.hintText),
+            style: MainUIConstants.textStyleSize12Weight400.copyWith(color: AppColors.hintText),
             maxLines: 2,
           )
         )

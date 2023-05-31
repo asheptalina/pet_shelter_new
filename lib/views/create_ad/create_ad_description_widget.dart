@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet_shelter_new/consts/app_assets.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
 import 'package:pet_shelter_new/states/app_state/app_state.dart';
 import 'package:pet_shelter_new/states/create_ad/create_ad_state.dart';
-import 'package:pet_shelter_new/states/feed/feed_state.dart';
 import 'package:pet_shelter_new/ui_consts/create_ad_ui_consts.dart';
 import 'package:pet_shelter_new/ui_consts/main_ui_consts.dart';
 import 'package:pet_shelter_new/views/components/custom_app_bar.dart';
 import 'package:pet_shelter_new/views/components/custom_form_field.dart';
 import 'package:pet_shelter_new/views/components/primary_button.dart';
+import 'package:pet_shelter_new/views/components/top_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -30,7 +30,7 @@ class CreateAdDescriptionWidget extends StatelessWidget {
     return Column(
         children: [
           CustomAppBar(
-              header: AppStrings.specifyAddressButton,
+              header: AppStrings.petDescriptionHeader,
               onBack: () => state.selectScreen(CreateAdScreen.specifyAddress)
           ),
           Expanded(child: SingleChildScrollView(
@@ -89,17 +89,21 @@ class CreateAdDescriptionWidget extends StatelessWidget {
 
   Widget _buildCreateButton(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
+    // final FeedState feedState = Provider.of<FeedState>(context, listen: false);
     return PrimaryButton(
         label: AppStrings.createAdButton,
         onPressed: () => state.createAd(
             (announcement) async {
-              // TODO: success overlay
-              final FeedState feedState = Provider.of<FeedState>(context);
-              await feedState.onSelectedAnnouncementWithoutAddress(announcement);
-              Routemaster.of(context).replace('/feed/ad');
+              showOverlay((context, t) {
+                return const TopSnackBar(text: AppStrings.createAdSuccessAlert);
+              });
+              Routemaster.of(context).replace('/feed');
+              // await feedState.onSelectedAnnouncementWithoutAddress(announcement, () {});
             },
             () {
-              // TODO: error overlay
+              showOverlay((context, t) {
+                return const TopSnackBar(text: AppStrings.createAdErrorAlert, isError: true);
+              });
             },
             appState.logout
         )
@@ -148,12 +152,11 @@ class CreateAdDescriptionWidget extends StatelessWidget {
                 color: selected ? Colors.white : AppColors.primary,
                 width: screenSize.width * 0.16
             ),
-            Text(petType.getDisplayName(), style: TextStyle( // TODO: move text style
-                fontFamily: AppAssets.mulishFontFamily,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: selected ? Colors.white : AppColors.primary
-            ))
+            Text(
+              petType.getDisplayName(),
+              style: MainUIConstants.textStyleSize14Weight600
+                  .copyWith(color: selected ? Colors.white : AppColors.primary)
+            )
           ],
         ),
       ),

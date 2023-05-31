@@ -121,6 +121,17 @@ abstract class CreateAdStateBase with Store {
       }
     }
     inProgress = false;
+    _clear();
+  }
+
+  void _clear() {
+    selectedScreen = CreateAdScreen.addPhoto;
+    photoFile = null;
+    petType = PetType.cat;
+    title = null;
+    description = null;
+    titleError = null;
+    descriptionError = null;
   }
 
   bool _validateFields() {

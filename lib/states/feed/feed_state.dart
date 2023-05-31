@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
@@ -35,10 +36,11 @@ abstract class FeedStateBase with Store {
   }
 
   @action
-  Future<void> onSelectedAnnouncementWithoutAddress(Announcement announcement) async {
+  Future<void> onSelectedAnnouncementWithoutAddress(Announcement announcement, VoidCallback onSuccess) async {
     List<Placemark> addresses = await (placemarkFromCoordinates(announcement.geoPosition.lat, announcement.geoPosition.lng));
     final address = addresses.isEmpty ? '' : '${addresses.first.locality}, ${addresses.first.name}';
     selectedAnnouncement = AnnouncementWithAddress(announcement: announcement, address: address);
+    onSuccess();
   }
 
   @action

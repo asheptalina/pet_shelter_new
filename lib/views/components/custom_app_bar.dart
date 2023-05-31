@@ -57,7 +57,7 @@ class CustomAppBar extends StatelessWidget {
             header!,
             maxLines: 2,
             textAlign: TextAlign.center,
-            style: MainUIConstants.titleTextStyle.copyWith(color: Colors.white)
+            style: MainUIConstants.textStyleSize20Weight700.copyWith(color: Colors.white)
         )
     );
   }

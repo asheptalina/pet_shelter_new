@@ -94,7 +94,7 @@ class _FeedWidgetState extends State<FeedWidget> {
             Tab(text: AppStrings.catsTab),
             Tab(text: AppStrings.otherTab),
           ],
-          labelStyle: MainUIConstants.bodySemiBoldTextStyle.copyWith(color: Colors.white),
+          labelStyle: MainUIConstants.textStyleSize16Weight700.copyWith(color: Colors.white),
           unselectedLabelColor: Colors.white,
           indicator: const BoxDecoration(
             border: Border(
@@ -169,7 +169,7 @@ class _FeedWidgetState extends State<FeedWidget> {
     return Center(
       child: Text(
         parameters,
-        style: MainUIConstants.bodyTextStyle.copyWith(color: AppColors.hintText)
+        style: MainUIConstants.textStyleSize16Weight400.copyWith(color: AppColors.hintText)
       )
     );
   }

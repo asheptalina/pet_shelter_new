@@ -38,7 +38,7 @@ class AlertWidget extends StatelessWidget {
         children: [
           Padding(
               padding: const EdgeInsets.only(top: 32, bottom: 56),
-              child: Text(title, style: MainUIConstants.bodyTextStyle, textAlign: TextAlign.center)
+              child: Text(title, style: MainUIConstants.textStyleSize16Weight400, textAlign: TextAlign.center)
           ),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

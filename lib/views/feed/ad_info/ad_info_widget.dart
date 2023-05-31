@@ -44,7 +44,7 @@ class AdInfoWidget extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: MainUIConstants.verticalPadding),
-                      Text(ad.description, style: MainUIConstants.bodyTextStyle, maxLines: 20)
+                      Text(ad.description, style: MainUIConstants.textStyleSize16Weight400, maxLines: 20)
                     ],
                   )
               )
@@ -80,7 +80,7 @@ class AdInfoWidget extends StatelessWidget {
         Expanded(
           child: Text(
             ad.address,
-            style: MainUIConstants.bodyTextStyle,
+            style: MainUIConstants.textStyleSize16Weight400,
             maxLines: 2,
           )
         )

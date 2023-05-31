@@ -100,6 +100,8 @@ class _AddPhotoWidgetState extends State<AddPhotoWidget> {
     if (image != null) {
       setState(() =>_showLoadingIndicator = false);
       widget.onSuccess(File(image.path));
+    } else {
+      setState(() =>_showLoadingIndicator = false);
     }
   }
 }

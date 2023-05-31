@@ -47,7 +47,7 @@ class ProfileViewWidget extends StatelessWidget {
           ),
           Observer(builder: (_) => Text(
               state.userName ?? AppStrings.nameFormFieldHint,
-              style: MainUIConstants.headlineTextStyle,
+              style: MainUIConstants.textStyleSize24Weight700,
               maxLines: 3,
               textAlign: TextAlign.center
           )),

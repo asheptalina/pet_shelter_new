@@ -63,9 +63,10 @@ mixin _$FeedState on FeedStateBase, Store {
       context: context);
 
   @override
-  Future<void> onSelectedAnnouncementWithoutAddress(Announcement announcement) {
-    return _$onSelectedAnnouncementWithoutAddressAsyncAction
-        .run(() => super.onSelectedAnnouncementWithoutAddress(announcement));
+  Future<void> onSelectedAnnouncementWithoutAddress(
+      Announcement announcement, VoidCallback onSuccess) {
+    return _$onSelectedAnnouncementWithoutAddressAsyncAction.run(() =>
+        super.onSelectedAnnouncementWithoutAddress(announcement, onSuccess));
   }
 
   late final _$getAdsAsyncAction =
