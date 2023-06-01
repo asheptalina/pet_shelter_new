@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pet_shelter_new/consts/app_colors.dart';
 import 'package:pet_shelter_new/consts/app_strings.dart';
 import 'package:pet_shelter_new/models/pet_type.dart';
@@ -9,7 +10,7 @@ import 'package:pet_shelter_new/views/components/loading_widget.dart';
 import 'package:pet_shelter_new/views/feed/feed_item_widget.dart';
 import 'package:routemaster/routemaster.dart';
 
-class FeedWidget extends StatefulWidget {
+class FeedWidget extends StatelessWidget {
 
   final FeedState state;
 
@@ -17,31 +18,12 @@ class FeedWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<FeedWidget> createState() => _FeedWidgetState();
-}
-
-class _FeedWidgetState extends State<FeedWidget> {
-
-  Future<void>? _future;
-
-  @override
-  void initState() {
-    _future = widget.state.getAds();
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(FeedWidget oldWidget) {
-    _future = widget.state.getAds();
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return _buildContent();
   }
 
   Widget _buildContent() {
+    state.getAds(petType: state.petType);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -86,7 +68,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                 petType = null;
                 break;
             }
-            _future = widget.state.onPetTypeChanged(petType);
+            state.onPetTypeChanged(petType);
           },
           tabs: const [
             Tab(text: AppStrings.allTab),
@@ -120,27 +102,14 @@ class _FeedWidgetState extends State<FeedWidget> {
   }
 
   Widget _buildBody() {
-    return FutureBuilder(
-        future: _future,
-        builder: ((context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return _buildErrorWidget(AppStrings.defaultErrorMessage);
-              } else {
-                return widget.state.announcements.isEmpty
-                    ? _buildErrorWidget(AppStrings.noAds) : _buildGrid();
-              }
-            case ConnectionState.waiting:
-              return const LoadingWidget();
-            default:
-              return _buildErrorWidget("Wrong state!");
-          }
-        })
+    return Observer(
+        builder: (ctxt) => state.inProgress
+            ? const LoadingWidget()
+            : state.announcements.isEmpty ? _buildErrorWidget(AppStrings.noAds) : _buildGrid(ctxt)
     );
   }
 
-  Widget _buildGrid() {
+  Widget _buildGrid(BuildContext context) {
     return GridView.count(
       padding: const EdgeInsets.symmetric(
           vertical: MainUIConstants.verticalPadding,
@@ -150,9 +119,9 @@ class _FeedWidgetState extends State<FeedWidget> {
       mainAxisSpacing: FeedUIConstants.gridSpacing,
       crossAxisSpacing: FeedUIConstants.gridSpacing,
       childAspectRatio: FeedUIConstants.gridItemAspectRatio,
-      children: widget.state.announcements.map((ad) => GestureDetector(
+      children: state.announcements.map((ad) => GestureDetector(
         onTap: () {
-          widget.state.onSelectedAnnouncement(ad);
+          state.onSelectedAnnouncement(ad);
           Routemaster.of(context).push('ad');
         },
         child: FeedItemWidget(

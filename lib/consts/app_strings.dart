@@ -1,7 +1,7 @@
 class AppStrings {
 
   // Auth screens
-  static const signInTab = 'ход';
+  static const signInTab = 'Вход';
   static const signUpTab = 'Регистрация';
 
   static const nameFormFieldHint = 'Имя';

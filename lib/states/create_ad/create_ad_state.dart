@@ -114,10 +114,9 @@ abstract class CreateAdStateBase with Store {
       );
       if (result.status == RequestStatus.success && result.body != null) {
         onSuccess(result.body!.last); // TODO: use GET ads/id. Now it doesn't work
-      } else if (result.status == RequestStatus.tokenExpired) {
-        onUnauthorized();
       } else {
-        onFailure();
+        _storage.refFromURL(photoUrl).delete();
+        result.status == RequestStatus.tokenExpired ? onUnauthorized() : onFailure();
       }
     }
     inProgress = false;

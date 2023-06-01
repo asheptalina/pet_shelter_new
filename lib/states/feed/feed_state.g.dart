@@ -58,6 +58,22 @@ mixin _$FeedState on FeedStateBase, Store {
     });
   }
 
+  late final _$inProgressAtom =
+      Atom(name: 'FeedStateBase.inProgress', context: context);
+
+  @override
+  bool get inProgress {
+    _$inProgressAtom.reportRead();
+    return super.inProgress;
+  }
+
+  @override
+  set inProgress(bool value) {
+    _$inProgressAtom.reportWrite(value, super.inProgress, () {
+      super.inProgress = value;
+    });
+  }
+
   late final _$onSelectedAnnouncementWithoutAddressAsyncAction = AsyncAction(
       'FeedStateBase.onSelectedAnnouncementWithoutAddress',
       context: context);
@@ -107,7 +123,8 @@ mixin _$FeedState on FeedStateBase, Store {
     return '''
 petType: ${petType},
 announcements: ${announcements},
-selectedAnnouncement: ${selectedAnnouncement}
+selectedAnnouncement: ${selectedAnnouncement},
+inProgress: ${inProgress}
     ''';
   }
 }

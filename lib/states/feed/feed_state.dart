@@ -17,6 +17,7 @@ abstract class FeedStateBase with Store {
   @observable PetType? petType;
   @observable List<AnnouncementWithAddress> announcements = [];
   @observable AnnouncementWithAddress? selectedAnnouncement;
+  @observable bool inProgress = false;
 
   final NetworkService networkService;
 
@@ -46,18 +47,29 @@ abstract class FeedStateBase with Store {
   @action
   Future<void> getAds({PetType? petType}) async {
     feedError = null;
+    if (inProgress) {
+      return;
+    }
+    inProgress = true;
     announcements = [];
 
     final result = await networkService.getAds(petType: petType);
 
     if (result.status == RequestStatus.success && result.body != null) {
+      print(result.body!.length);
       for (var ad in result.body!) {
-        List<Placemark> addresses = await (placemarkFromCoordinates(ad.geoPosition.lat, ad.geoPosition.lng));
-        final address = addresses.isEmpty ? '' : '${addresses.first.locality}, ${addresses.first.name}';
-        announcements.add(AnnouncementWithAddress(announcement: ad, address: address));
+        try {
+          List<Placemark> addresses = await placemarkFromCoordinates(ad.geoPosition.lat, ad.geoPosition.lng);
+          final address = addresses.isEmpty ? '' : '${addresses.first.locality}, ${addresses.first.name}';
+          announcements.add(AnnouncementWithAddress(announcement: ad, address: address));
+        } catch (err) {
+          announcements.add(AnnouncementWithAddress(announcement: ad, address: ''));
+        }
       }
+
     } else {
       feedError = AppStrings.defaultErrorMessage;
     }
+    inProgress = false;
   }
 }
